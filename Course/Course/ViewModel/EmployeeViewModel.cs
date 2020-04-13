@@ -68,7 +68,7 @@ namespace Course.ViewModel
         {
             Employee employee = new Employee()
             {
-                EmployeesId = Employee.EmployeesId,
+                EmployeeId = Employee.EmployeeId,
                 FirstName = Employee.FirstName,
                 LastName = Employee.LastName,
                 Patronymic = Employee.Patronymic,
@@ -81,7 +81,7 @@ namespace Course.ViewModel
 
             try
             {
-                db.Employees.Remove(db.Employees.Where(x => x.EmployeesId == employee.EmployeesId).First());
+                db.Employees.Remove(db.Employees.Where(x => x.EmployeeId == employee.EmployeeId).First());
                 db.Employees.Add(employee);
                 db.SaveChanges();
                 //_transferData.ID_Author = author.ID_Author;

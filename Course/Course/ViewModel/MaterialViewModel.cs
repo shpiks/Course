@@ -20,13 +20,19 @@ namespace Course.ViewModel
         RelayCommand addCommand;
         RelayCommand editCommand;
         RelayCommand deleteCommand;
-        public RelayCommand ExitCommand { get; set; }
-        public RelayCommand AcceptCommand { get; private set; }
+
+        private Employee Employee;
+
         public Material Material { get; private set; }
 
-        public MaterialViewModel(Material material)
+        public RelayCommand ExitCommand { get; set; }
+        public RelayCommand AcceptCommand { get; private set; }
+        
+
+        public MaterialViewModel(Material material, Employee employee)
         {
             db = new ApplicationContext();
+            Employee = employee;
             if (material == null)
             {
                 Material = new Material();
@@ -64,9 +70,11 @@ namespace Course.ViewModel
             try
             {
                 db.Materials.Add(material);
+                db.Employees.SingleOrDefault(x => x.EmployeeId == Employee.EmployeeId).Materials.Add(material);
                 db.SaveChanges();
                 //_transferData.ID_Author = author.ID_Author;
                 ExitCommand.Execute();
+                
             }
             catch (Exception exc)
             {

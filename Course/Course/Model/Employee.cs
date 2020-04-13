@@ -9,7 +9,7 @@ namespace Course.Model
 {
     public class Employee : INotifyPropertyChanged
     {
-        private int employeesId { get; set; }
+        private int employeeId { get; set; }
         private string firstName { get; set; } // Имя
         private string lastName { get; set; } // Фамилия
         private string patronymic { get; set; } // Отчество
@@ -24,14 +24,12 @@ namespace Course.Model
             this.Materials = new HashSet<Material>();
         }
 
-        public int Id { get; set; }
-
-        public int EmployeesId
+        public int EmployeeId
         {
-            get { return employeesId; }
+            get { return employeeId; }
             set
             {
-                employeesId = value;
+                employeeId = value;
                 OnPropertyChanged("EmployeesId");
             }
         }

@@ -23,10 +23,10 @@ namespace Course.View
     public partial class MaterialWindow : Window
     {
         
-        public MaterialWindow(Material material)
+        public MaterialWindow(Material material, Employee employee)
         {
             InitializeComponent();
-            MaterialViewModel materialViewModel = new MaterialViewModel(material);
+            MaterialViewModel materialViewModel = new MaterialViewModel(material, employee);
             materialViewModel.ExitCommand = new Commands.RelayCommand(x => this.Close());
             //Material = p;
             //this.DataContext = Material;

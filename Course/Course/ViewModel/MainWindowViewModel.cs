@@ -32,10 +32,18 @@ namespace Course.ViewModel
         public ObservableCollection<Material> Materials
         {
             get { return materials; }
+
+            //get
+            //{
+            //    if (string.IsNullOrEmpty(FilterBooks)) return _books;
+            //    return new ObservableCollection<Books>(_books
+            //        .Where(x => x.Name.ToLower().Contains(FilterBooks.ToLower())
+            //        || (x.ISBN != null && x.ISBN.ToLower().Contains(FilterBooks.ToLower()))));
+            //}
+
             set
             {
                 materials = value;
-                //OnPropertyChanged("Materials");
             }
         }
 
@@ -45,7 +53,7 @@ namespace Course.ViewModel
             set
             {
                 employees = value;
-                //OnPropertyChanged("Materials");
+                OnPropertyChanged("Employees");
             }
         }
 
@@ -66,14 +74,21 @@ namespace Course.ViewModel
             {
                 selectedEmployee = value;
                 OnPropertyChanged("SelectedEmployee");
+                materials.Clear();
+                if (selectedEmployee != null)
+                {
+                    db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.ToList().ForEach(x => materials.Add(x));
+                    //FilterBooks = "";
+                }
             }
+
         }
 
         public MainWindowViewModel()
         {
             db = new ApplicationContext();
-            db.Materials.Load();
-            this.Materials = new ObservableCollection<Material>(db.Materials.Local.ToBindingList());
+            //db.Materials.Load();
+            this.Materials = new ObservableCollection<Material>();
             db.Employees.Load();
             this.Employees = new ObservableCollection<Employee>(db.Employees.Local.ToBindingList());
         }
@@ -85,14 +100,19 @@ namespace Course.ViewModel
                 return addMaterialCommand ??
                   (addMaterialCommand = new RelayCommand((o) =>
                   {
-                      MaterialWindow materialWindow = new MaterialWindow(null);
+                      MaterialWindow materialWindow = new MaterialWindow(null, selectedEmployee);
                       materialWindow.ShowDialog();
-                      var newMaterial = db.Materials.ToList().Except(materials.ToList()).FirstOrDefault();
+
+                      var newMaterial = db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.ToList().Except(Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.ToList()).FirstOrDefault();
                       if (newMaterial != null)
-                          materials.Add(newMaterial);
+                          Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Add(newMaterial);
+
+
+
                       MessageBox.Show("Материал добавлен");
-                      //_transferData.ID_Author = null;
-                  }));
+
+                  }, (o => SelectedEmployee != null)
+                  ));
             }
         }
 
@@ -107,7 +127,7 @@ namespace Course.ViewModel
                       if (result == MessageBoxResult.Yes)
                       {
                           var material = o as Material;
-                          MaterialWindow materialWindow = new MaterialWindow(material);
+                          MaterialWindow materialWindow = new MaterialWindow(material, selectedEmployee);
                           //materialWindow.
                           materialWindow.ShowDialog();
                           materials.Remove(material);
@@ -188,11 +208,35 @@ namespace Course.ViewModel
 
 
                       }
-                  }, (o => SelectedMaterial != null)
+                  }, (o => SelectedEmployee != null)
                   ));
             }
         }
 
+        public RelayCommand DeleteEmployeeCommand
+        {
+            get
+            {
+                return deleteEmployeeCommand ??
+                  (deleteEmployeeCommand = new RelayCommand((o) =>
+                  {
+                      var result = MessageBox.Show("Удалить сотрудника?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
+
+                      if (result == MessageBoxResult.Yes)
+                      {
+                          var material = o as Material;
+                          if (material != null)
+                          {
+                              db.Materials.Remove(db.Materials.Where(x => x.MaterialId == material.MaterialId).First());
+                              db.SaveChanges();
+                              materials.Remove(material);
+                              //SelectedAuthor = SelectedAuthor;
+                          }
+                      }
+                  }, (o => SelectedEmployee != null))
+                  );
+            }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
