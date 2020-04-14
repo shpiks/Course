@@ -1,4 +1,5 @@
-﻿using Course.Model;
+﻿using Course.Context;
+using Course.Model;
 using Course.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,10 @@ namespace Course.View
     public partial class MaterialWindow : Window
     {
         
-        public MaterialWindow(Material material, Employee employee)
+        public MaterialWindow(Material material, Employee employee, ApplicationContext db)
         {
             InitializeComponent();
-            MaterialViewModel materialViewModel = new MaterialViewModel(material, employee);
+            MaterialViewModel materialViewModel = new MaterialViewModel(material, employee, db);
             materialViewModel.ExitCommand = new Commands.RelayCommand(x => this.Close());
             //Material = p;
             //this.DataContext = Material;

@@ -100,12 +100,11 @@ namespace Course.ViewModel
                 return addMaterialCommand ??
                   (addMaterialCommand = new RelayCommand((o) =>
                   {
-                      MaterialWindow materialWindow = new MaterialWindow(null, selectedEmployee);
+                      MaterialWindow materialWindow = new MaterialWindow(null, selectedEmployee, db);
                       materialWindow.ShowDialog();
 
-                      var newMaterial = db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.ToList().Except(Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.ToList()).FirstOrDefault();
-                      if (newMaterial != null)
-                          Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Add(newMaterial);
+                      materials.Clear();
+                      db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.ToList().ForEach(x => materials.Add(x));
 
 
 
@@ -127,13 +126,14 @@ namespace Course.ViewModel
                       if (result == MessageBoxResult.Yes)
                       {
                           var material = o as Material;
-                          MaterialWindow materialWindow = new MaterialWindow(material, selectedEmployee);
-                          //materialWindow.
+                          MaterialWindow materialWindow = new MaterialWindow(material, selectedEmployee, db);
                           materialWindow.ShowDialog();
-                          materials.Remove(material);
-                          var newMaterial = db.Materials.ToList().Except(materials.ToList()).FirstOrDefault();
-                          if (newMaterial != null)
-                              materials.Add(newMaterial);
+
+
+                          //materials.Remove(material);
+                          //var newMaterial = db.Materials.ToList().Except(materials.ToList()).FirstOrDefault();
+                          //if (newMaterial != null)
+                          //    materials.Add(newMaterial);
                           MessageBox.Show("Материал изменен");
 
 

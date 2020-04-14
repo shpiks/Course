@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Course.Context
 {
-    class ApplicationContext : DbContext
+    public class ApplicationContext : DbContext
     {
         public ApplicationContext() : base("DefaultConnection")
         {

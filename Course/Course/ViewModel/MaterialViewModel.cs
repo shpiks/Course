@@ -29,9 +29,9 @@ namespace Course.ViewModel
         public RelayCommand AcceptCommand { get; private set; }
         
 
-        public MaterialViewModel(Material material, Employee employee)
+        public MaterialViewModel(Material material, Employee employee, ApplicationContext db)
         {
-            db = new ApplicationContext();
+            this.db = db;
             Employee = employee;
             if (material == null)
             {
@@ -45,8 +45,7 @@ namespace Course.ViewModel
             }
 
 
-            //db.Materials.Load();
-            //this.Materials = db.Materials.Local.ToBindingList();
+
         }
 
         private void AddCommand(object obj)
@@ -87,7 +86,7 @@ namespace Course.ViewModel
         {
             Material material = new Material()
             {
-                MaterialId =Material.MaterialId,
+                MaterialId = Material.MaterialId,
                 NumberEK = Material.NumberEK,
                 Story = Material.Story,
                 DateOfRegistration = Material.DateOfRegistration,
@@ -103,8 +102,14 @@ namespace Course.ViewModel
 
             try
             {
-                db.Materials.Remove(db.Materials.Where(x => x.MaterialId == material.MaterialId).First());
-                db.Materials.Add(material);
+
+                var oldMaterial = db.Materials.Where(x => x.MaterialId == Material.MaterialId).SingleOrDefault();
+                if (oldMaterial != null)
+                    oldMaterial = material;
+
+                //db.Materials.Remove(db.Materials.Where(x => x.MaterialId == Material.MaterialId).First());
+                //db.Materials.Add(material);
+
                 db.SaveChanges();
                 //_transferData.ID_Author = author.ID_Author;
                 ExitCommand.Execute();
@@ -113,6 +118,22 @@ namespace Course.ViewModel
             {
                 MessageBox.Show(exc.Message);
             }
+
+            //var 
+
+            //var oldBook = _dbContext.Books.Where(x => x.ID_Book == Book.ID_Book).SingleOrDefault();
+
+            //if (oldBook != null)
+            //{
+            //    oldBook.Name = Book.Name;
+            //    oldBook.ID_Company = (SelectedCompany is null) ? null : SelectedCompany.ID_Company;
+            //    oldBook.Year = (Book.Year is null) ? null : Book.Year;
+            //    oldBook.ISBN = Book.ISBN;
+            //    oldBook.Description = Book.Description;
+            //    oldBook.ID_Genre = (SelectedGenre is null) ? null : SelectedGenre.ID_Genre;
+            //};
+
+            //_dbContext.SaveChanges();
 
         }
 
