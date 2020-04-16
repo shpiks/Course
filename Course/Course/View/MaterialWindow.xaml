@@ -5,13 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Course.View"
       mc:Ignorable="d" 
-      Title="MaterialWindow" Height="300" Width="300">
+      Title="Материал" Height="350" Width="350"
+        WindowStartupLocation="CenterOwner">
 
 
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
+            <RowDefinition Height="60" />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -25,26 +27,59 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Единая Книга" />
-        <TextBlock Text="Фабула" Grid.Row="1" />
-        <TextBlock Text="Дата регистрации" Grid.Row="2" />
-        <TextBlock Text="Срок" Grid.Row="3" />
-        <TextBlock Text="Продление" Grid.Row="4" />
-        <TextBlock Text="Решение" Grid.Row="5" />
-        <TextBlock Text="Исполнен" Grid.Row="6" />
-        <TextBlock Text="Перспектива" Grid.Row="7" />
 
-        <TextBox Text="{Binding Material.NumberEK}" Grid.Column="1" />
-        <TextBox Text="{Binding  Material.Story}" Grid.Column="1" Grid.Row="1" />
-        <TextBox Text="{Binding  Material.DateOfRegistration}" Grid.Column="1" Grid.Row="2" />
-        <TextBox Text="{Binding Material.DateOfTerm}" Grid.Column="1" Grid.Row="3" />
-        <TextBox Text="{Binding  Material.Extension}" Grid.Column="1" Grid.Row="4" />
-        <TextBox Text="{Binding  Material.Decision}" Grid.Column="1" Grid.Row="5" />
-        <TextBox Text="{Binding Material.ExecutedOrNotExecuted}" Grid.Column="1" Grid.Row="6" />
-        <TextBox Text="{Binding  Material.Perspective}" Grid.Column="1" Grid.Row="7" />
+        <TextBlock Text="Единая Книга" 
+                   HorizontalAlignment="Center" />
+        <TextBlock Text="Фабула" Grid.Row="1" 
+                   HorizontalAlignment="Center" />
+        <TextBlock Text="Дата регистрации" Grid.Row="2"
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="Срок" Grid.Row="3" 
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="Продление" Grid.Row="4"
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="Решение" Grid.Row="5"
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="Исполнен" Grid.Row="6"
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="Заявитель" Grid.Row="7"
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="Перспектива" Grid.Row="8"
+                   HorizontalAlignment="Center"/>
         
 
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="8" Grid.Column="1">
+        <TextBox Text="{Binding Material.NumberEK}"
+                 Grid.Column="1" />
+        <TextBox Text="{Binding  Material.Story}"
+                 Grid.Column="1" Grid.Row="1" />
+        <DatePicker  SelectedDate ="{Binding  Material.DateOfRegistration}"
+                     Grid.Column="1" Grid.Row="2" />
+        <DatePicker SelectedDate ="{Binding Material.DateOfTerm}"
+                    Grid.Column="1" Grid.Row="3" />
+        <CheckBox IsChecked="{Binding  Material.Extension}"
+                  Grid.Column="1" Grid.Row="4"
+                  HorizontalAlignment ="Left"
+                  VerticalAlignment="Center"/>
+        <TextBox Text="{Binding  Material.Decision}"
+                 Grid.Column="1" Grid.Row="5" />
+        <CheckBox IsChecked="{Binding Material.ExecutedOrNotExecuted}"
+                  Grid.Column="1" Grid.Row="6" 
+                  HorizontalAlignment ="Left"
+                  VerticalAlignment="Center"/>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="7" Grid.Column="1">
+            <Button Content="Добавить" MinWidth="60"
+                    Margin="5"
+                    Command="{Binding AddVictimCommand}"
+                    CommandParameter="{Binding Material}"/>
+            <Button Content="Изменить" MinWidth="60"
+                    Margin="5"
+                    Command="{Binding EditVictimCommand}"
+                    CommandParameter="{Binding Material}"/>
+        </StackPanel>
+        <TextBox Text="{Binding  Material.Perspective}"
+                 Grid.Column="1" Grid.Row="8" />
+
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="9" Grid.Column="1">
             <Button IsDefault="True"  MinWidth="60" Margin="5" Command="{Binding AcceptCommand}" >OK</Button>
             <Button IsCancel="True" MinWidth="60" Margin="5">Отмена</Button>
         </StackPanel>

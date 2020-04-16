@@ -19,27 +19,21 @@ namespace Course.ViewModel
         ApplicationContext db;
         private Material selectedMaterial;
         private Employee selectedEmployee;
+
         RelayCommand addMaterialCommand;
         RelayCommand deleteMaterialCommand;
         RelayCommand editMaterialCommand;
         RelayCommand addEmployeeCommand;
         RelayCommand deleteEmployeeCommand;
         RelayCommand editEmployeeCommand;
-        private ObservableCollection<Material> materials { get; set; }
-        private ObservableCollection<Employee> employees { get; set; }
+
+        private ObservableCollection<Material> materials;
+        private ObservableCollection<Employee> employees;
 
 
         public ObservableCollection<Material> Materials
         {
             get { return materials; }
-
-            //get
-            //{
-            //    if (string.IsNullOrEmpty(FilterBooks)) return _books;
-            //    return new ObservableCollection<Books>(_books
-            //        .Where(x => x.Name.ToLower().Contains(FilterBooks.ToLower())
-            //        || (x.ISBN != null && x.ISBN.ToLower().Contains(FilterBooks.ToLower()))));
-            //}
 
             set
             {
@@ -106,8 +100,6 @@ namespace Course.ViewModel
                       materials.Clear();
                       db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.ToList().ForEach(x => materials.Add(x));
 
-
-
                       MessageBox.Show("Материал добавлен");
 
                   }, (o => SelectedEmployee != null)
@@ -129,13 +121,7 @@ namespace Course.ViewModel
                           MaterialWindow materialWindow = new MaterialWindow(material, selectedEmployee, db);
                           materialWindow.ShowDialog();
 
-
-                          //materials.Remove(material);
-                          //var newMaterial = db.Materials.ToList().Except(materials.ToList()).FirstOrDefault();
-                          //if (newMaterial != null)
-                          //    materials.Add(newMaterial);
                           MessageBox.Show("Материал изменен");
-
 
                       }
                   }, (o => SelectedMaterial != null)
@@ -160,7 +146,6 @@ namespace Course.ViewModel
                               db.Materials.Remove(db.Materials.Where(x => x.MaterialId == material.MaterialId).First());
                               db.SaveChanges();
                               materials.Remove(material);
-                              //SelectedAuthor = SelectedAuthor;
                           }
                       }
                   }, (o => SelectedMaterial != null))
@@ -181,7 +166,6 @@ namespace Course.ViewModel
                       if (newEmployee != null)
                           employees.Add(newEmployee);
                       MessageBox.Show("Сотрудник добавлен");
-                      //_transferData.ID_Author = null;
                   }));
             }
         }
@@ -198,7 +182,6 @@ namespace Course.ViewModel
                       {
                           var employee = o as Employee;
                           EmployeeWindow employeeWindow = new EmployeeWindow(employee);
-                          //materialWindow.
                           employeeWindow.ShowDialog();
                           employees.Remove(employee);
                           var newEmployee = db.Employees.ToList().Except(employees.ToList()).FirstOrDefault();
@@ -230,7 +213,6 @@ namespace Course.ViewModel
                               db.Materials.Remove(db.Materials.Where(x => x.MaterialId == material.MaterialId).First());
                               db.SaveChanges();
                               materials.Remove(material);
-                              //SelectedAuthor = SelectedAuthor;
                           }
                       }
                   }, (o => SelectedEmployee != null))

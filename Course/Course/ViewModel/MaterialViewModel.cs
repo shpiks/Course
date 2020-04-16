@@ -17,9 +17,6 @@ namespace Course.ViewModel
     public class MaterialViewModel
     {
         ApplicationContext db;
-        RelayCommand addCommand;
-        RelayCommand editCommand;
-        RelayCommand deleteCommand;
 
         private Employee Employee;
 
@@ -27,7 +24,9 @@ namespace Course.ViewModel
 
         public RelayCommand ExitCommand { get; set; }
         public RelayCommand AcceptCommand { get; private set; }
-        
+
+        RelayCommand addVictimCommand;
+
 
         public MaterialViewModel(Material material, Employee employee, ApplicationContext db)
         {
@@ -43,9 +42,6 @@ namespace Course.ViewModel
                 Material = material;
                 AcceptCommand = new RelayCommand(EditCommand);
             }
-
-
-
         }
 
         private void AddCommand(object obj)
@@ -71,7 +67,6 @@ namespace Course.ViewModel
                 db.Materials.Add(material);
                 db.Employees.SingleOrDefault(x => x.EmployeeId == Employee.EmployeeId).Materials.Add(material);
                 db.SaveChanges();
-                //_transferData.ID_Author = author.ID_Author;
                 ExitCommand.Execute();
                 
             }
@@ -79,7 +74,6 @@ namespace Course.ViewModel
             {
                 MessageBox.Show(exc.Message);
             }
-
         }
 
         private void EditCommand(object obj)
@@ -107,34 +101,30 @@ namespace Course.ViewModel
                 if (oldMaterial != null)
                     oldMaterial = material;
 
-                //db.Materials.Remove(db.Materials.Where(x => x.MaterialId == Material.MaterialId).First());
-                //db.Materials.Add(material);
-
                 db.SaveChanges();
-                //_transferData.ID_Author = author.ID_Author;
                 ExitCommand.Execute();
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
             }
+        }
 
-            //var 
+        public RelayCommand AddVictimCommand
+        {
+            get
+            {
+                return addVictimCommand ??
+                  (addVictimCommand = new RelayCommand((o) =>
+                  {
+                      VictimWindow victimWindow = new VictimWindow(Material, db);
+                      victimWindow.ShowDialog();
 
-            //var oldBook = _dbContext.Books.Where(x => x.ID_Book == Book.ID_Book).SingleOrDefault();
+                      MessageBox.Show("Материал добавлен");
 
-            //if (oldBook != null)
-            //{
-            //    oldBook.Name = Book.Name;
-            //    oldBook.ID_Company = (SelectedCompany is null) ? null : SelectedCompany.ID_Company;
-            //    oldBook.Year = (Book.Year is null) ? null : Book.Year;
-            //    oldBook.ISBN = Book.ISBN;
-            //    oldBook.Description = Book.Description;
-            //    oldBook.ID_Genre = (SelectedGenre is null) ? null : SelectedGenre.ID_Genre;
-            //};
-
-            //_dbContext.SaveChanges();
-
+                  }
+                  ));
+            }
         }
 
 
@@ -143,13 +133,13 @@ namespace Course.ViewModel
 
 
 
-            //public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-            //public void OnPropertyChanged([CallerMemberName]string prop = "")
-            //{
-            //    if (PropertyChanged != null)
-            //        PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            //}
-        }
+        //public void OnPropertyChanged([CallerMemberName]string prop = "")
+        //{
+        //    if (PropertyChanged != null)
+        //        PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        //}
+    }
 }
 
