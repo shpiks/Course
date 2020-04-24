@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Course.View"
       mc:Ignorable="d" 
-      Title="Материал" Height="350" Width="350"
+      Title="Материал" Height="400" Width="400"
         WindowStartupLocation="CenterOwner">
 
 
@@ -19,7 +19,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="90"/>
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -67,14 +67,24 @@
                   HorizontalAlignment ="Left"
                   VerticalAlignment="Center"/>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="7" Grid.Column="1">
-            <Button Content="Добавить" MinWidth="60"
+            <ComboBox MaxHeight="20" Width="140"
+                      ItemsSource="{Binding victimsList}"
+                      DisplayMemberPath ="LastName"
+                      SelectedItem="{Binding SelectedVictim, Mode=TwoWay}"/>
+            <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                <Button Content="Добавить" MinWidth="60"
                     Margin="5"
                     Command="{Binding AddVictimCommand}"
                     CommandParameter="{Binding Material}"/>
-            <Button Content="Изменить" MinWidth="60"
+                <Button Content="Изменить" MinWidth="60"
+                    Margin="5"
+                    Command="{Binding EditVictimCommand}"
+                    CommandParameter="{Binding SelectedVictim}"/>
+                <Button Content="Просмотреть" MinWidth="60"
                     Margin="5"
                     Command="{Binding EditVictimCommand}"
                     CommandParameter="{Binding Material}"/>
+            </StackPanel>
         </StackPanel>
         <TextBox Text="{Binding  Material.Perspective}"
                  Grid.Column="1" Grid.Row="8" />

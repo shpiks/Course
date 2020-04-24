@@ -25,7 +25,6 @@ namespace Course.Model
         {
             this.Materials = new HashSet<Material>();
         }
-        public int Id { get; set; }
 
         public int VictimId
         {

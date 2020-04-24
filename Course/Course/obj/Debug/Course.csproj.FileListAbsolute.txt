@@ -62,3 +62,5 @@ E:\Git\Course\Course\Course\obj\Debug\Course.csproj.CoreCompileInputs.cache
 E:\Git\Course\Course\Course\obj\Debug\Course.csproj.CopyComplete
 E:\Git\Course\Course\Course\obj\Debug\Course.exe
 E:\Git\Course\Course\Course\obj\Debug\Course.pdb
+E:\Git\Course\Course\Course\obj\Debug\View\VictimWindow.g.cs
+E:\Git\Course\Course\Course\obj\Debug\View\VictimWindow.baml

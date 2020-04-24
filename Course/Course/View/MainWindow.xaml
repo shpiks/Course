@@ -44,7 +44,7 @@
             <ListBox Name="LBEmloyees"  MinHeight="300"
                      ItemsSource="{Binding Employees}"
                      SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
-                     DisplayMemberPath ="FirstName">
+                     DisplayMemberPath ="LastName">
             </ListBox>
             <Button Content="Добавить" Margin="5"
                     Command="{Binding AddEmployeeCommand}"/>

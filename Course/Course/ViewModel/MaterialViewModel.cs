@@ -4,6 +4,7 @@ using Course.Model;
 using Course.View;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
@@ -14,24 +15,40 @@ using System.Windows;
 
 namespace Course.ViewModel
 {
-    public class MaterialViewModel
+    public class MaterialViewModel : INotifyPropertyChanged
     {
         ApplicationContext db;
-
+        private Victim selectedVictim;
         private Employee Employee;
 
+        public ObservableCollection<Victim> victimsList { get; private set; }
+
         public Material Material { get; private set; }
+
+        RelayCommand addVictimCommand;
+        RelayCommand editVictimCommand;
 
         public RelayCommand ExitCommand { get; set; }
         public RelayCommand AcceptCommand { get; private set; }
 
-        RelayCommand addVictimCommand;
+
+        public Victim SelectedVictim
+        {
+            get { return selectedVictim; }
+            set
+            {
+                selectedVictim = value;
+                OnPropertyChanged("SelectedVictim");
+            }
+        }
 
 
         public MaterialViewModel(Material material, Employee employee, ApplicationContext db)
         {
             this.db = db;
+            victimsList = new ObservableCollection<Victim>();
             Employee = employee;
+            
             if (material == null)
             {
                 Material = new Material();
@@ -40,6 +57,7 @@ namespace Course.ViewModel
             else
             {
                 Material = material;
+                db.Materials.Where(x => x.MaterialId == Material.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
                 AcceptCommand = new RelayCommand(EditCommand);
             }
         }
@@ -48,7 +66,6 @@ namespace Course.ViewModel
         {
             Material material = new Material()
             {
-
                 NumberEK = Material.NumberEK,
                 Story = Material.Story,
                 DateOfRegistration = Material.DateOfRegistration,
@@ -62,18 +79,18 @@ namespace Course.ViewModel
                 //Nickname = (Author.Nickname is null) ? "" : Author.Nickname
             };
 
-            try
-            {
+            //try
+            //{
                 db.Materials.Add(material);
                 db.Employees.SingleOrDefault(x => x.EmployeeId == Employee.EmployeeId).Materials.Add(material);
                 db.SaveChanges();
                 ExitCommand.Execute();
                 
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
+            //}
+            //catch (Exception exc)
+            //{
+            //    MessageBox.Show(exc.Message);
+            //}
         }
 
         private void EditCommand(object obj)
@@ -117,12 +134,36 @@ namespace Course.ViewModel
                 return addVictimCommand ??
                   (addVictimCommand = new RelayCommand((o) =>
                   {
-                      VictimWindow victimWindow = new VictimWindow(Material, db);
+                      VictimWindow victimWindow = new VictimWindow(Material, db, null);
                       victimWindow.ShowDialog();
 
-                      MessageBox.Show("Материал добавлен");
+                      victimsList.Clear();
+                      db.Materials.Where(x => x.MaterialId == Material.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
 
+                      MessageBox.Show("Потерпевший добавлен");
                   }
+                  ));
+            }
+        }
+
+        public RelayCommand EditVictimCommand
+        {
+            get
+            {
+                return editVictimCommand ??
+                  (editVictimCommand = new RelayCommand((o) =>
+                  {
+                      var result = MessageBox.Show("Изменить информацию о потерпевшем?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                      if (result == MessageBoxResult.Yes)
+                      {
+                          var material = o as Material;
+                          VictimWindow victimWindow = new VictimWindow(Material, db, selectedVictim);
+                          victimWindow.ShowDialog();
+
+                          MessageBox.Show("Данные потерпевшего изменены");
+
+                      }
+                  }, (o => SelectedVictim != null)
                   ));
             }
         }
@@ -133,13 +174,13 @@ namespace Course.ViewModel
 
 
 
-        //public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        //public void OnPropertyChanged([CallerMemberName]string prop = "")
-        //{
-        //    if (PropertyChanged != null)
-        //        PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        //}
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }
 

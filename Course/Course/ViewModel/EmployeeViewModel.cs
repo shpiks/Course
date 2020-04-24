@@ -81,10 +81,14 @@ namespace Course.ViewModel
 
             try
             {
-                db.Employees.Remove(db.Employees.Where(x => x.EmployeeId == employee.EmployeeId).First());
-                db.Employees.Add(employee);
+                var oldEmployee = db.Employees.Where(x => x.EmployeeId == Employee.EmployeeId).SingleOrDefault();
+                if (oldEmployee != null)
+                    oldEmployee = employee;
+
+
+                //db.Employees.Remove(db.Employees.Where(x => x.EmployeeId == employee.EmployeeId).First());
+                //db.Employees.Add(employee);
                 db.SaveChanges();
-                //_transferData.ID_Author = author.ID_Author;
                 ExitCommand.Execute();
             }
             catch (Exception exc)

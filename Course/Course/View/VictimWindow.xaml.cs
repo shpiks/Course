@@ -22,11 +22,11 @@ namespace Course.View
     /// </summary>
     public partial class VictimWindow : Window
     {
-        public VictimWindow(Material material, ApplicationContext db)
+        public VictimWindow(Material material, ApplicationContext db, Victim victim)
         {
             InitializeComponent();
-            VictimViewModel victimViewModel = new VictimViewModel(material, db);
-            //materialViewModel.ExitCommand = new Commands.RelayCommand(x => this.Close());
+            VictimViewModel victimViewModel = new VictimViewModel(material, db, victim);
+            victimViewModel.ExitCommand = new Commands.RelayCommand(x => this.Close());
             this.DataContext = victimViewModel;
         }
     }
