@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Course.View"
       mc:Ignorable="d" 
-      Title="Материал" Height="400" Width="400"
+      Title="Материал" Height="410" Width="400"
         WindowStartupLocation="CenterOwner">
 
 
@@ -51,7 +51,8 @@
         <TextBox Text="{Binding Material.NumberEK}"
                  Grid.Column="1" />
         <TextBox Text="{Binding  Material.Story}"
-                 Grid.Column="1" Grid.Row="1" />
+                 Grid.Column="1" Grid.Row="1" 
+                 TextWrapping ="Wrap"/>
         <DatePicker  SelectedDate ="{Binding  Material.DateOfRegistration}"
                      Grid.Column="1" Grid.Row="2" />
         <DatePicker SelectedDate ="{Binding Material.DateOfTerm}"
@@ -61,7 +62,8 @@
                   HorizontalAlignment ="Left"
                   VerticalAlignment="Center"/>
         <TextBox Text="{Binding  Material.Decision}"
-                 Grid.Column="1" Grid.Row="5" />
+                 Grid.Column="1" Grid.Row="5" 
+                 TextWrapping ="Wrap"/>
         <CheckBox IsChecked="{Binding Material.ExecutedOrNotExecuted}"
                   Grid.Column="1" Grid.Row="6" 
                   HorizontalAlignment ="Left"
@@ -87,11 +89,20 @@
             </StackPanel>
         </StackPanel>
         <TextBox Text="{Binding  Material.Perspective}"
-                 Grid.Column="1" Grid.Row="8" />
+                 Grid.Column="1" Grid.Row="8"
+                 TextWrapping ="Wrap"/>
 
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="9" Grid.Column="1">
-            <Button IsDefault="True"  MinWidth="60" Margin="5" Command="{Binding AcceptCommand}" >OK</Button>
-            <Button IsCancel="True" MinWidth="60" Margin="5">Отмена</Button>
+        <StackPanel HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Grid.Row="9" Grid.Column="1">
+            <Button IsDefault="True"  MinWidth="60"
+                    Margin="5"
+                    Command="{Binding AcceptCommand}">
+                OK</Button>
+            <Button IsCancel="True" MinWidth="60"
+                    Margin="5"
+                    Command="{Binding ExitCommand}">
+                Отмена</Button>
         </StackPanel>
     </Grid>
 </Window>

@@ -31,9 +31,15 @@
         <TextBox Text="{Binding Employee.Position}" Grid.Column="1" Grid.Row="3" />
         <TextBox Text="{Binding  Employee.Rank}" Grid.Column="1" Grid.Row="4" />
         
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
-            <Button IsDefault="True"  MinWidth="60" Margin="5" Command="{Binding AcceptCommand}" >OK</Button>
-            <Button IsCancel="True" MinWidth="60" Margin="5">Отмена</Button>
+        <StackPanel HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Grid.Row="5" Grid.Column="1">
+            <Button IsDefault="True"  MinWidth="60"
+                    Margin="5"
+                    Command="{Binding AcceptCommand}" >OK</Button>
+            <Button IsCancel="True" MinWidth="60"
+                    Margin="5"
+                    Command="{Binding ExitCommand}">Отмена</Button>
         </StackPanel>
 
     </Grid>

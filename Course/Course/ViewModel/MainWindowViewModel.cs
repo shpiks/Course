@@ -26,6 +26,7 @@ namespace Course.ViewModel
         RelayCommand addEmployeeCommand;
         RelayCommand deleteEmployeeCommand;
         RelayCommand editEmployeeCommand;
+        RelayCommand lookVictimCommand;
 
         private ObservableCollection<Material> materials;
         private ObservableCollection<Employee> employees;
@@ -160,7 +161,7 @@ namespace Course.ViewModel
                 return addEmployeeCommand ??
                   (addEmployeeCommand = new RelayCommand((o) =>
                   {
-                      EmployeeWindow employeeWindow = new EmployeeWindow(null);
+                      EmployeeWindow employeeWindow = new EmployeeWindow(null, db);
                       employeeWindow.ShowDialog();
                       var newEmployee = db.Employees.ToList().Except(employees.ToList()).FirstOrDefault();
                       if (newEmployee != null)
@@ -181,12 +182,14 @@ namespace Course.ViewModel
                       if (result == MessageBoxResult.Yes)
                       {
                           var employee = o as Employee;
-                          EmployeeWindow employeeWindow = new EmployeeWindow(employee);
+                          EmployeeWindow employeeWindow = new EmployeeWindow(employee, db);
                           employeeWindow.ShowDialog();
-                          employees.Remove(employee);
-                          var newEmployee = db.Employees.ToList().Except(employees.ToList()).FirstOrDefault();
-                          if (newEmployee != null)
-                              employees.Add(newEmployee);
+
+
+                          //employees.Remove(employee);
+                          //var newEmployee = db.Employees.ToList().Except(employees.ToList()).FirstOrDefault();
+                          //if (newEmployee != null)
+                          //    employees.Add(newEmployee);
                           MessageBox.Show("Данные сотрудника изменены");
 
 
@@ -217,6 +220,22 @@ namespace Course.ViewModel
                       }
                   }, (o => SelectedEmployee != null))
                   );
+            }
+        }
+
+        public RelayCommand LookVictimCommand
+        {
+            get
+            {
+                return lookVictimCommand ??
+                  (lookVictimCommand = new RelayCommand((o) =>
+                  {
+                      var victim = o as Victim;
+                      VictimWindow victimWindow = new VictimWindow(null, db, victim);
+                      victimWindow.ShowDialog();
+
+                  }, (o => SelectedMaterial != null)
+                  ));
             }
         }
 

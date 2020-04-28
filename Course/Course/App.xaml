@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Course"
              StartupUri="View/MainWindow.xaml" Startup ="Application_Startup">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="View/Styles/MainWindowStyle.xaml"/>
+                <ResourceDictionary Source="View/Styles/Brushes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

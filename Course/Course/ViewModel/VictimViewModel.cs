@@ -30,6 +30,11 @@ namespace Course.ViewModel
                 Victim = new Victim();
                 AcceptCommand = new RelayCommand(AddCommand);
             }
+            if (Material == null)
+            {
+                Victim = victim;
+                AcceptCommand = new RelayCommand(LookCommand);
+            }
             else
             {
                 Victim = victim;
@@ -55,10 +60,10 @@ namespace Course.ViewModel
 
             //try
             //{
-                db.Victims.Add(victim);
-                db.Materials.SingleOrDefault(x => x.MaterialId == Material.MaterialId).Victims.Add(victim);
-                db.SaveChanges();
-                ExitCommand.Execute();
+            db.Victims.Add(victim);
+            db.Materials.SingleOrDefault(x => x.MaterialId == Material.MaterialId).Victims.Add(victim);
+            db.SaveChanges();
+            ExitCommand.Execute();
             //}
 
             //catch (Exception exc)
@@ -102,5 +107,26 @@ namespace Course.ViewModel
             }
         }
 
+        private void LookCommand(object obj)
+        {
+            Victim victim = new Victim()
+            {
+                FirstName = Victim.FirstName,
+                LastName = Victim.LastName,
+                Patronymic = Victim.Patronymic,
+                PhoneNumber = Victim.PhoneNumber,
+                City = Victim.City,
+                Street = Victim.Street,
+                Home = Victim.Home,
+                Flat = Victim.Flat,
+                DateOfBirth = Victim.DateOfBirth
+
+                //Patronymic = (Author.Patronymic is null) ? "" : Author.Patronymic,
+                //Nickname = (Author.Nickname is null) ? "" : Author.Nickname
+            };
+
+            ExitCommand.Execute();
+        }
+
     }
-}
+ }

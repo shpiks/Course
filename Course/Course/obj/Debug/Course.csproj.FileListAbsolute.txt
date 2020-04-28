@@ -45,7 +45,6 @@ E:\Git\Course\Course\Course\bin\Debug\EntityFramework.xml
 E:\Git\Course\Course\Course\bin\Debug\EntityFramework.SqlServer.xml
 E:\Git\Course\Course\Course\bin\Debug\System.Data.SQLite.xml
 E:\Git\Course\Course\Course\bin\Debug\System.Data.SQLite.dll.config
-E:\Git\Course\Course\Course\obj\Debug\Course.csprojAssemblyReference.cache
 E:\Git\Course\Course\Course\obj\Debug\View\MainWindow.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\EmployeeWindow.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\MaterialWindow.g.cs
@@ -64,3 +63,8 @@ E:\Git\Course\Course\Course\obj\Debug\Course.exe
 E:\Git\Course\Course\Course\obj\Debug\Course.pdb
 E:\Git\Course\Course\Course\obj\Debug\View\VictimWindow.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\VictimWindow.baml
+E:\Git\Course\Course\Course\obj\Debug\Course.csprojAssemblyReference.cache
+E:\Git\Course\Course\Course\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\Git\Course\Course\Course\obj\Debug\View\Styles\MainWindowStyle.baml
+E:\Git\Course\Course\Course\obj\Debug\App.baml
+E:\Git\Course\Course\Course\obj\Debug\View\Styles\Brushes.baml
