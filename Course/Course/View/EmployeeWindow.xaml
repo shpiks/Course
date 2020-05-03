@@ -19,11 +19,21 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Фамилия" />
-        <TextBlock Text="Имя" Grid.Row="1" />
-        <TextBlock Text="Отчество" Grid.Row="2" />
-        <TextBlock Text="Должность" Grid.Row="3" />
-        <TextBlock Text="Звание" Grid.Row="4" />
+        <TextBlock Text="Фамилия" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        <TextBlock Text="Имя" Grid.Row="1" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        <TextBlock Text="Отчество" Grid.Row="2" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        <TextBlock Text="Должность" Grid.Row="3"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        <TextBlock Text="Звание" Grid.Row="4"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
 
         <TextBox Text="{Binding Employee.LastName}" Grid.Column="1" />
         <TextBox Text="{Binding  Employee.FirstName}" Grid.Column="1" Grid.Row="1" />

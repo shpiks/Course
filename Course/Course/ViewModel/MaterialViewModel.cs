@@ -27,6 +27,7 @@ namespace Course.ViewModel
 
         RelayCommand addVictimCommand;
         RelayCommand editVictimCommand;
+        RelayCommand changeTermCommand;
 
         public RelayCommand ExitCommand { get; set; }
         public RelayCommand AcceptCommand { get; private set; }
@@ -56,7 +57,21 @@ namespace Course.ViewModel
             }
             else
             {
-                Material = material;
+                //Material = material;
+
+                Material = new Material()
+                {
+                    MaterialId = material.MaterialId,
+                    NumberEK = material.NumberEK,
+                    Story = material.Story,
+                    DateOfRegistration = material.DateOfRegistration,
+                    DateOfTerm = material.DateOfTerm,
+                    Extension = material.Extension,
+                    Decision = material.Decision,
+                    ExecutedOrNotExecuted = material.ExecutedOrNotExecuted,
+                    Perspective = material.Perspective
+                };
+
                 db.Materials.Where(x => x.MaterialId == Material.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
                 AcceptCommand = new RelayCommand(EditCommand);
             }
@@ -79,44 +94,56 @@ namespace Course.ViewModel
                 //Nickname = (Author.Nickname is null) ? "" : Author.Nickname
             };
 
-            //try
-            //{
+            try
+            {
                 db.Materials.Add(material);
                 db.Employees.SingleOrDefault(x => x.EmployeeId == Employee.EmployeeId).Materials.Add(material);
                 db.SaveChanges();
                 ExitCommand.Execute();
-                
-            //}
-            //catch (Exception exc)
-            //{
-            //    MessageBox.Show(exc.Message);
-            //}
+
         }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+}
 
         private void EditCommand(object obj)
         {
-            Material material = new Material()
-            {
-                MaterialId = Material.MaterialId,
-                NumberEK = Material.NumberEK,
-                Story = Material.Story,
-                DateOfRegistration = Material.DateOfRegistration,
-                DateOfTerm = Material.DateOfTerm,
-                Extension = Material.Extension,
-                Decision = Material.Decision,
-                ExecutedOrNotExecuted = Material.ExecutedOrNotExecuted,
-                Perspective = Material.Perspective
+            //Material material = new Material()
+            //{
+            //    MaterialId = Material.MaterialId,
+            //    NumberEK = Material.NumberEK,
+            //    Story = Material.Story,
+            //    DateOfRegistration = Material.DateOfRegistration,
+            //    DateOfTerm = Material.DateOfTerm,
+            //    Extension = Material.Extension,
+            //    Decision = Material.Decision,
+            //    ExecutedOrNotExecuted = Material.ExecutedOrNotExecuted,
+            //    Perspective = Material.Perspective
 
-                //Patronymic = (Author.Patronymic is null) ? "" : Author.Patronymic,
-                //Nickname = (Author.Nickname is null) ? "" : Author.Nickname
-            };
+            //    //Patronymic = (Author.Patronymic is null) ? "" : Author.Patronymic,
+            //    //Nickname = (Author.Nickname is null) ? "" : Author.Nickname
+            //};
 
             try
             {
 
                 var oldMaterial = db.Materials.Where(x => x.MaterialId == Material.MaterialId).SingleOrDefault();
                 if (oldMaterial != null)
-                    oldMaterial = material;
+                {
+                    //MaterialId = Material.MaterialId,
+                    oldMaterial.NumberEK = Material.NumberEK;
+                    oldMaterial.Story = Material.Story;
+                    oldMaterial.DateOfRegistration = Material.DateOfRegistration;
+                    oldMaterial.DateOfTerm = Material.DateOfTerm;
+                    oldMaterial.Extension = Material.Extension;
+                    oldMaterial.Decision = Material.Decision;
+                    oldMaterial.ExecutedOrNotExecuted = Material.ExecutedOrNotExecuted;
+                    oldMaterial.Perspective = Material.Perspective;
+                }
+
+                //oldMaterial = material;
 
                 db.SaveChanges();
                 ExitCommand.Execute();
@@ -164,6 +191,20 @@ namespace Course.ViewModel
 
                       }
                   }, (o => SelectedVictim != null)
+                  ));
+            }
+        }
+
+        public RelayCommand ChangeTermCommand
+        {
+            get
+            {
+                return changeTermCommand ??
+                  (changeTermCommand = new RelayCommand((o) =>
+                  {
+                      DateTime date = (DateTime) o;
+                      Material.DateOfTerm = date.AddDays(10);
+                  }
                   ));
             }
         }

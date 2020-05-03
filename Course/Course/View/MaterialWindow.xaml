@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:local="clr-namespace:Course.View"
       mc:Ignorable="d" 
       Title="Материал" Height="410" Width="400"
@@ -29,23 +30,32 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Единая Книга" 
-                   HorizontalAlignment="Center" />
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
         <TextBlock Text="Фабула" Grid.Row="1" 
-                   HorizontalAlignment="Center" />
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
         <TextBlock Text="Дата регистрации" Grid.Row="2"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
         <TextBlock Text="Срок" Grid.Row="3" 
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
         <TextBlock Text="Продление" Grid.Row="4"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
         <TextBlock Text="Решение" Grid.Row="5"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
         <TextBlock Text="Исполнен" Grid.Row="6"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
         <TextBlock Text="Заявитель" Grid.Row="7"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
         <TextBlock Text="Перспектива" Grid.Row="8"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
         
 
         <TextBox Text="{Binding Material.NumberEK}"
@@ -53,10 +63,21 @@
         <TextBox Text="{Binding  Material.Story}"
                  Grid.Column="1" Grid.Row="1" 
                  TextWrapping ="Wrap"/>
-        <DatePicker  SelectedDate ="{Binding  Material.DateOfRegistration}"
-                     Grid.Column="1" Grid.Row="2" />
-        <DatePicker SelectedDate ="{Binding Material.DateOfTerm}"
-                    Grid.Column="1" Grid.Row="3" />
+        <DatePicker Name="DPDateRegistration"  SelectedDate ="{Binding  Material.DateOfRegistration}"
+                     Grid.Column="1" Grid.Row="2" 
+                     IsTodayHighlighted ="True"
+                     VerticalAlignment="Center">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedDateChanged">
+                    <i:InvokeCommandAction
+                            Command="{Binding ChangeTermCommand}"
+                            CommandParameter="{Binding Material.DateOfRegistration}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DatePicker> 
+        <DatePicker Name="DPTerm" SelectedDate ="{Binding Material.DateOfTerm}"
+                    Grid.Column="1" Grid.Row="3" 
+                    VerticalAlignment="Center"/>
         <CheckBox IsChecked="{Binding  Material.Extension}"
                   Grid.Column="1" Grid.Row="4"
                   HorizontalAlignment ="Left"

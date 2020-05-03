@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -27,6 +28,8 @@ namespace Course.ViewModel
         RelayCommand deleteEmployeeCommand;
         RelayCommand editEmployeeCommand;
         RelayCommand lookVictimCommand;
+
+
 
         private ObservableCollection<Material> materials;
         private ObservableCollection<Employee> employees;
@@ -86,6 +89,7 @@ namespace Course.ViewModel
             this.Materials = new ObservableCollection<Material>();
             db.Employees.Load();
             this.Employees = new ObservableCollection<Employee>(db.Employees.Local.ToBindingList());
+
         }
 
         public RelayCommand AddMaterialCommand
@@ -123,7 +127,6 @@ namespace Course.ViewModel
                           materialWindow.ShowDialog();
 
                           MessageBox.Show("Материал изменен");
-
                       }
                   }, (o => SelectedMaterial != null)
                   ));
@@ -231,13 +234,16 @@ namespace Course.ViewModel
                   (lookVictimCommand = new RelayCommand((o) =>
                   {
                       var victim = o as Victim;
-                      VictimWindow victimWindow = new VictimWindow(null, db, victim);
+                      LookVictimWindow victimWindow = new LookVictimWindow(null, db, victim);
                       victimWindow.ShowDialog();
 
                   }, (o => SelectedMaterial != null)
                   ));
             }
         }
+
+
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -28,16 +28,30 @@ namespace Course.ViewModel
             if (victim == null)
             {
                 Victim = new Victim();
+                Victim.DateOfBirth = new DateTime(1980,01,01);
                 AcceptCommand = new RelayCommand(AddCommand);
             }
-            if (Material == null)
+            else if (Material == null)
             {
                 Victim = victim;
                 AcceptCommand = new RelayCommand(LookCommand);
             }
             else
             {
-                Victim = victim;
+                //Victim = victim;
+                Victim = new Victim()
+                {
+                    VictimId = victim.VictimId,
+                    FirstName = victim.FirstName,
+                    LastName = victim.LastName,
+                    Patronymic = victim.Patronymic,
+                    PhoneNumber = victim.PhoneNumber,
+                    City = victim.City,
+                    Street = victim.Street,
+                    Home = victim.Home,
+                    Flat = victim.Flat,
+                    DateOfBirth = victim.DateOfBirth
+                };
                 AcceptCommand = new RelayCommand(EditCommand);
             }
         }
@@ -58,45 +72,58 @@ namespace Course.ViewModel
                 DateOfBirth = Victim.DateOfBirth
             };
 
-            //try
-            //{
+            try
+            {
             db.Victims.Add(victim);
             db.Materials.SingleOrDefault(x => x.MaterialId == Material.MaterialId).Victims.Add(victim);
             db.SaveChanges();
             ExitCommand.Execute();
-            //}
+            }
 
-            //catch (Exception exc)
-            //{
-            //    MessageBox.Show(exc.Message);
-            //}
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
 
         }
 
         private void EditCommand(object obj)
         {
-            Victim victim = new Victim()
-            {
-                FirstName = Victim.FirstName,
-                LastName = Victim.LastName,
-                Patronymic = Victim.Patronymic,
-                PhoneNumber = Victim.PhoneNumber,
-                City = Victim.City,
-                Street = Victim.Street,
-                Home = Victim.Home,
-                Flat = Victim.Flat,
-                DateOfBirth = Victim.DateOfBirth
+            //Victim victim = new Victim()
+            //{
+            //    FirstName = Victim.FirstName,
+            //    LastName = Victim.LastName,
+            //    Patronymic = Victim.Patronymic,
+            //    PhoneNumber = Victim.PhoneNumber,
+            //    City = Victim.City,
+            //    Street = Victim.Street,
+            //    Home = Victim.Home,
+            //    Flat = Victim.Flat,
+            //    DateOfBirth = Victim.DateOfBirth
 
-                //Patronymic = (Author.Patronymic is null) ? "" : Author.Patronymic,
-                //Nickname = (Author.Nickname is null) ? "" : Author.Nickname
-            };
+            //    //Patronymic = (Author.Patronymic is null) ? "" : Author.Patronymic,
+            //    //Nickname = (Author.Nickname is null) ? "" : Author.Nickname
+            //};
 
             try
             {
 
                 var oldVictim = db.Victims.Where(x => x.VictimId == Victim.VictimId).SingleOrDefault();
                 if (oldVictim != null)
-                    oldVictim = victim;
+                {
+                    oldVictim.FirstName = Victim.FirstName;
+                    oldVictim.LastName = Victim.LastName;
+                    oldVictim.Patronymic = Victim.Patronymic;
+                    oldVictim.PhoneNumber = Victim.PhoneNumber;
+                    oldVictim.City = Victim.City;
+                    oldVictim.Street = Victim.Street;
+                    oldVictim.Home = Victim.Home;
+                    oldVictim.Flat = Victim.Flat;
+                    oldVictim.DateOfBirth = Victim.DateOfBirth;
+                }
+
+
+                //oldVictim = victim;
 
                 db.SaveChanges();
                 ExitCommand.Execute();

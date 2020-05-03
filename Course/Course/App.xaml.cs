@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Course.View;
+using System;
+using System.Threading;
 using System.Windows;
 
 namespace Course
@@ -14,8 +11,9 @@ namespace Course
     public partial class App : Application
     {
         System.Threading.Mutex mutex;
-        private void Application_Startup(object sender, StartupEventArgs e)
+        private void Application_Startup()
         {
+
             bool createdNew;
             string mutName = "Course";
             mutex = new System.Threading.Mutex(true, mutName, out createdNew);
@@ -23,6 +21,32 @@ namespace Course
             {
                 this.Shutdown();
             }
+
         }
+
+
+
+        [STAThread]
+        static void Main()
+        {
+
+
+            App app = new App();
+            app.Application_Startup();
+
+            var splash = new SplashScreen("Resources/preview.jpeg");
+            splash.Show(true);
+            MainWindow window = new MainWindow();
+
+            TimerCallback tm = new TimerCallback(NotificationTimer.NotificationTimer.Notification);
+            Timer timer = new Timer(tm, null, 0, 2000);
+
+            app.Run(window);
+
+
+        }
+
+
+
     }
 }

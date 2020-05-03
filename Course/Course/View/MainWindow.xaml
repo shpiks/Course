@@ -46,10 +46,18 @@
             <ListBox Name="LBEmloyees"  Height="300" Width="200"
                      ItemsSource="{Binding Employees}"
                      SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
-                     DisplayMemberPath ="LastName"
                      Opacity="0.9"
                      Margin="5">
-            </ListBox>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Stretch">
+                                <Run Text="{Binding LastName}" />
+                                <Run Text="{Binding FirstName}" />
+                                
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </ScrollViewer>
             <Button Content="Добавить" Margin="5" Width="150"
                     Command="{Binding AddEmployeeCommand}"
@@ -71,10 +79,16 @@
                 <ListBox Name="LBMaterials"  Height="300" Width="200"
                      ItemsSource="{Binding Materials}"
                      SelectedItem="{Binding SelectedMaterial}"
-                     DisplayMemberPath ="NumberEK"
                      Opacity="0.9"
                      Margin="5">
-            </ListBox>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Stretch">
+                                <Run Text="{Binding NumberEK, Converter={StaticResource ConverterEK} }" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </ScrollViewer>
             <Button Content="Добавить" Margin="5" Width="150"
                     Command="{Binding AddMaterialCommand}"/>
@@ -145,7 +159,6 @@
 
             <StackPanel Orientation="Horizontal">
                 <Label Content="Срок по материалу:"
-                       FontFamily="Technical Italic, Comic Sans MS, Arial"
                        Style="{StaticResource ForLabel}"/>
                 <TextBlock Name="TBDateOfTerm"
                            Text="{Binding Path=DateOfTerm,
@@ -171,17 +184,16 @@
                        Style="{StaticResource ForLabel}"/>
                 <ListBox Name="LBVictim"
                            Height="100"
-                          ItemsSource="{Binding Victims}"
-                   
+                          ItemsSource="{Binding Victims, Mode=TwoWay}"
                          DisplayMemberPath ="LastName"/>
             </StackPanel>
             </StackPanel>
         </StackPanel>
-        <Button Content="Просмотреть" Margin="5,585,5,55"
+        <Button Content="Просмотреть" Margin="41,590,40,47"
+                Width="150" 
                     Command="{Binding LookVictimCommand}"
                     CommandParameter="{Binding ElementName=LBVictim,
             Path = SelectedItem}"
                 Grid.Column="2" Grid.Row="1"/>
-            
     </Grid>
 </Window>
