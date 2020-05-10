@@ -33,10 +33,6 @@ namespace Course.View
         }
 
 
-        //private void DPDateRegistration_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    DateTime date = (DateTime)DPDateRegistration.SelectedDate;
-        //    DPTerm.SelectedDate = date.AddDays(10);
-        //}
+
     }
 }

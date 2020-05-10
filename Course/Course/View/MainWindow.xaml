@@ -133,7 +133,18 @@
                            VerticalAlignment="Center"
                            Margin="5"/>
             </StackPanel>
-            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Срок по материалу:"
+                       Style="{StaticResource ForLabel}"/>
+                    <TextBlock Name="TBDateOfTerm"
+                           Text="{Binding Path=DateOfTerm,
+                    StringFormat=d,
+                    ConverterCulture=en-GB}"
+                           Style="{StaticResource ForLabel}"
+                           VerticalAlignment="Center"
+                           Margin="5"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
                 <Label Content="Фабула:"
                        Style="{StaticResource ForLabel}"/>
                 <TextBlock Name="TBStory"
@@ -157,17 +168,7 @@
                            TextWrapping ="Wrap"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Срок по материалу:"
-                       Style="{StaticResource ForLabel}"/>
-                <TextBlock Name="TBDateOfTerm"
-                           Text="{Binding Path=DateOfTerm,
-                    StringFormat=d,
-                    ConverterCulture=en-GB}"
-                           Style="{StaticResource ForLabel}"
-                           VerticalAlignment="Center"
-                           Margin="5"/>
-            </StackPanel>
+
             <StackPanel Orientation="Horizontal">
                 <Label Content="Продленный:"
                        Style="{StaticResource ForLabel}"/>

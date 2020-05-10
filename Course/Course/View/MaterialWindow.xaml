@@ -9,7 +9,9 @@
       Title="Материал" Height="410" Width="400"
         WindowStartupLocation="CenterOwner">
 
-
+    <Window.Resources>
+        <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>

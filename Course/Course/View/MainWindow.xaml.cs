@@ -1,4 +1,5 @@
-﻿using Course.ViewModel;
+﻿using Course.Context;
+using Course.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,10 @@ namespace Course.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(ApplicationContext db)
         {
             InitializeComponent();
-            //this.DataContext = new MaterialViewModel();
-            this.DataContext = new MainWindowViewModel();
+            this.DataContext = new MainWindowViewModel(db);
         }
     }
 }

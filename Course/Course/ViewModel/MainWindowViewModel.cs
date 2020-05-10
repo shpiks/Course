@@ -75,20 +75,24 @@ namespace Course.ViewModel
                 materials.Clear();
                 if (selectedEmployee != null)
                 {
-                    db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.ToList().ForEach(x => materials.Add(x));
+                    db.Materials.Where(x => x.DateOfTerm < DateTime.Today).ToList().ForEach(x => x.ExecutedOrNotExecuted = true);
+                    db.SaveChanges();
+                    db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => materials.Add(x));
                     //FilterBooks = "";
                 }
             }
 
         }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(ApplicationContext db)
         {
-            db = new ApplicationContext();
-            //db.Materials.Load();
+            //db = new ApplicationContext();
+            this.db = db;
+
             this.Materials = new ObservableCollection<Material>();
-            db.Employees.Load();
-            this.Employees = new ObservableCollection<Employee>(db.Employees.Local.ToBindingList());
+            this.db.Employees.Load();
+            this.Employees = new ObservableCollection<Employee>(this.db.Employees.Local.ToBindingList());
+
 
         }
 

@@ -9,6 +9,11 @@
         mc:Ignorable="d"
         Title="VictimWindow" Height="350" Width="350"
         WindowStartupLocation="CenterOwner">
+    
+    <Window.Resources>
+        <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />
+    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
