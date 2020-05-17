@@ -77,6 +77,7 @@ namespace Course.ViewModel
             db.Victims.Add(victim);
             db.Materials.SingleOrDefault(x => x.MaterialId == Material.MaterialId).Victims.Add(victim);
             db.SaveChanges();
+            MessageBox.Show("Потерпевший добавлен, после обновления выбора материала или сотрудника он будет отображаться в соответсвующем поле");
             ExitCommand.Execute();
             }
 

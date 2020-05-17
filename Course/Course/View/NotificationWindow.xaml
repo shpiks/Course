@@ -19,7 +19,9 @@
                 <GridView>
                     <GridViewColumn DisplayMemberBinding=
                                     "{Binding NumberEK}"
-                                    Width="70"> № ЕК</GridViewColumn>
+                                    Width="70"
+                                    > № ЕК
+                    </GridViewColumn>
                     
                     
                     <GridViewColumn Header="Сотрудник" Width="100">

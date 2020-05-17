@@ -28,6 +28,10 @@ namespace Course.ViewModel
         RelayCommand deleteEmployeeCommand;
         RelayCommand editEmployeeCommand;
         RelayCommand lookVictimCommand;
+        RelayCommand addVictimCommand;
+        RelayCommand lookAllMaterialCommand;
+
+        public RelayCommand ExitCommand { get; set; }
 
 
 
@@ -107,7 +111,7 @@ namespace Course.ViewModel
                       materialWindow.ShowDialog();
 
                       materials.Clear();
-                      db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.ToList().ForEach(x => materials.Add(x));
+                      db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => materials.Add(x));
 
                       MessageBox.Show("Материал добавлен");
 
@@ -173,7 +177,7 @@ namespace Course.ViewModel
                       var newEmployee = db.Employees.ToList().Except(employees.ToList()).FirstOrDefault();
                       if (newEmployee != null)
                           employees.Add(newEmployee);
-                      MessageBox.Show("Сотрудник добавлен");
+                      //MessageBox.Show("Сотрудник добавлен");
                   }));
             }
         }
@@ -197,7 +201,7 @@ namespace Course.ViewModel
                           //var newEmployee = db.Employees.ToList().Except(employees.ToList()).FirstOrDefault();
                           //if (newEmployee != null)
                           //    employees.Add(newEmployee);
-                          MessageBox.Show("Данные сотрудника изменены");
+                          //MessageBox.Show("Данные сотрудника изменены");
 
 
                       }
@@ -246,8 +250,45 @@ namespace Course.ViewModel
             }
         }
 
+        public RelayCommand AddVictimCommand 
+        {
+            get
+            {
+                return addVictimCommand ??
+                  (addVictimCommand = new RelayCommand((o) =>
+                  {
+                      VictimWindow victimWindow = new VictimWindow(SelectedMaterial, db, null);
+                      victimWindow.ShowDialog();
 
+                      //victimsList.Clear();
+                      //db.Materials.Where(x => x.MaterialId == SelectedMaterial.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
 
+                      //MessageBox.Show("Потерпевший добавлен");
+
+                  }, (o => SelectedMaterial != null)
+                  ));
+            }
+        }
+
+        public RelayCommand LookAllMaterialCommand
+        {
+            get
+            {
+                return lookAllMaterialCommand ??
+                  (lookAllMaterialCommand = new RelayCommand((o) =>
+                  {
+                      AllMaterialWindow allMaterialWindow = new AllMaterialWindow(db);
+                      allMaterialWindow.ShowDialog();
+
+                      //victimsList.Clear();
+                      //db.Materials.Where(x => x.MaterialId == SelectedMaterial.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
+
+                      //MessageBox.Show("Потерпевший добавлен");
+
+                  }
+                  ));
+            }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

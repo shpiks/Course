@@ -30,9 +30,15 @@
             Background="#FF4b5354"
             Foreground = "FloralWhite"
             >
-            <MenuItem Header="Что-то"  >
+            <MenuItem Header="Удаление"  >
+                <MenuItem  Command="{Binding DeleteMaterial}"
+                    CommandParameter="{Binding SelectedMaterial}" Header="Удалить материал из БД" />
+                <MenuItem  Command="{Binding DeleteEmployeeCommand}"
+                    CommandParameter="{Binding SelectedEmployee}" Header="Удалить сотрудника из БД" />
             </MenuItem>
-            <MenuItem Header="что-то еще">
+            <MenuItem Header="Функции">
+                <MenuItem  Command="{Binding LookAllMaterialCommand}"
+                     Header="Поиск материалов"/>
             </MenuItem>
             <MenuItem Header="и еще" />
         </Menu>
@@ -90,13 +96,17 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </ScrollViewer>
-            <Button Content="Добавить" Margin="5" Width="150"
+            <Button Content="Добавить материал" Margin="5" Width="150"
                     Command="{Binding AddMaterialCommand}"/>
-            <Button Content="Изменить" Margin="5" Width="150"
+            <Button Content="Изменить материал" Margin="5" Width="150"
                     Command="{Binding EditMaterialCommand}"
                     CommandParameter="{Binding SelectedMaterial}"/>
-            <Button Content="Удалить" Margin="5" Width="150"
+            <Button Content="Удалить материал" Margin="5" Width="150"
                     Command="{Binding DeleteMaterialCommand}"
+                    CommandParameter="{Binding SelectedMaterial}"/>
+            <Button Content="Добавить заявителя" Width="150"
+                    Margin="5"
+                    Command="{Binding AddVictimCommand}"
                     CommandParameter="{Binding SelectedMaterial}"/>
         </StackPanel>
 
@@ -195,6 +205,7 @@
                     Command="{Binding LookVictimCommand}"
                     CommandParameter="{Binding ElementName=LBVictim,
             Path = SelectedItem}"
+                IsEnabled="{Binding ElementName=LBVictim, Path=SelectedItems.Count}"
                 Grid.Column="2" Grid.Row="1"/>
     </Grid>
 </Window>

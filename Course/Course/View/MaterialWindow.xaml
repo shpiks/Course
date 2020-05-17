@@ -6,23 +6,25 @@
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:local="clr-namespace:Course.View"
       mc:Ignorable="d" 
-      Title="Материал" Height="410" Width="400"
-        WindowStartupLocation="CenterOwner">
+      Title="Информация о материале" Height="410" Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode ="NoResize">
 
     <Window.Resources>
         <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />
     </Window.Resources>
 
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="80" />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition Height="90"/>
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -46,16 +48,17 @@
         <TextBlock Text="Продление" Grid.Row="4"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-        <TextBlock Text="Решение" Grid.Row="5"
+        
+        <TextBlock Text="Заявитель" Grid.Row="5"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-        <TextBlock Text="Исполнен" Grid.Row="6"
+        <TextBlock Text="Перспектива" Grid.Row="6"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-        <TextBlock Text="Заявитель" Grid.Row="7"
+        <TextBlock Text="Решение" Grid.Row="7"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-        <TextBlock Text="Перспектива" Grid.Row="8"
+        <TextBlock Text="Исполнен" Grid.Row="8"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
         
@@ -64,7 +67,8 @@
                  Grid.Column="1" />
         <TextBox Text="{Binding  Material.Story}"
                  Grid.Column="1" Grid.Row="1" 
-                 TextWrapping ="Wrap"/>
+                 TextWrapping ="Wrap"
+                 Height="70"/>
         <DatePicker Name="DPDateRegistration"  SelectedDate ="{Binding  Material.DateOfRegistration}"
                      Grid.Column="1" Grid.Row="2" 
                      IsTodayHighlighted ="True"
@@ -84,36 +88,62 @@
                   Grid.Column="1" Grid.Row="4"
                   HorizontalAlignment ="Left"
                   VerticalAlignment="Center"/>
-        <TextBox Text="{Binding  Material.Decision}"
-                 Grid.Column="1" Grid.Row="5" 
-                 TextWrapping ="Wrap"/>
-        <CheckBox IsChecked="{Binding Material.ExecutedOrNotExecuted}"
-                  Grid.Column="1" Grid.Row="6" 
-                  HorizontalAlignment ="Left"
-                  VerticalAlignment="Center"/>
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="7" Grid.Column="1">
-            <ComboBox MaxHeight="20" Width="140"
+        
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
+            <ComboBox MaxHeight="20" Width="180"
                       ItemsSource="{Binding victimsList}"
                       DisplayMemberPath ="LastName"
                       SelectedItem="{Binding SelectedVictim, Mode=TwoWay}"/>
-            <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
-                <Button Content="Добавить" MinWidth="60"
+            
+                <!--<Button Content="Добавить" MinWidth="60"
                     Margin="5"
                     Command="{Binding AddVictimCommand}"
-                    CommandParameter="{Binding Material}"/>
+                    CommandParameter="{Binding Material}"/>-->
                 <Button Content="Изменить" MinWidth="60"
                     Margin="5"
                     Command="{Binding EditVictimCommand}"
                     CommandParameter="{Binding SelectedVictim}"/>
-                <Button Content="Просмотреть" MinWidth="60"
+                <!--<Button Content="Просмотреть" MinWidth="60"
                     Margin="5"
                     Command="{Binding EditVictimCommand}"
-                    CommandParameter="{Binding Material}"/>
-            </StackPanel>
+                    CommandParameter="{Binding Material}"/>-->
+
         </StackPanel>
-        <TextBox Text="{Binding  Material.Perspective}"
-                 Grid.Column="1" Grid.Row="8"
-                 TextWrapping ="Wrap"/>
+
+        <!--<TextBox Text="{Binding  Material.Perspective}"
+                 Grid.Column="1" Grid.Row="6"
+                 TextWrapping ="Wrap"/>-->
+        <ComboBox  ItemsSource="{Binding PerspectiveList}"
+
+            SelectedItem="{Binding  Material.Perspective}"
+                  Grid.Column="1" Grid.Row="6"/>
+
+        <ComboBox x:Name="CBDecision"
+            ItemsSource="{Binding DecisionList}"
+
+            SelectedItem="{Binding  Material.Decision}"
+                  Grid.Column="1" Grid.Row="7"/>
+        <!--<TextBox Text="{Binding  Material.Decision}"
+                 Grid.Column="1" Grid.Row="5" 
+                 TextWrapping ="Wrap"/>-->
+        <CheckBox IsChecked="{Binding Material.ExecutedOrNotExecuted}"
+                  Grid.Column="1" Grid.Row="8" 
+                  HorizontalAlignment ="Left"
+                  VerticalAlignment="Center"
+                  IsEnabled="{Binding ElementName=CBDecision, Path=SelectedIndex,
+            Converter={StaticResource ConverterDesisionCB}}"
+                  >
+            <!--<CheckBox.Style>
+                <Style TargetType="CheckBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=CBDecision, Path=SelectedItem}" Value="{x:Null}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </CheckBox.Style>-->
+        </CheckBox>
+        
 
         <StackPanel HorizontalAlignment="Center"
                     Orientation="Horizontal"

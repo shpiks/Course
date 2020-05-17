@@ -22,10 +22,12 @@ namespace Course.ViewModel
         private Employee Employee;
 
         public ObservableCollection<Victim> victimsList { get; private set; }
+        public List<string> DecisionList { get; private set; }
+        public List<string> PerspectiveList { get; private set; }
 
         public Material Material { get; private set; }
 
-        RelayCommand addVictimCommand;
+        //RelayCommand addVictimCommand;
         RelayCommand editVictimCommand;
         RelayCommand changeTermCommand;
 
@@ -48,6 +50,9 @@ namespace Course.ViewModel
         {
             this.db = db;
             victimsList = new ObservableCollection<Victim>();
+            DecisionList = new List<string> { "Отказано в ВУД", "ВУД(факт)", "ВУД(лицо)", "Передано по территориальности",
+                "Передано в др. службу", "Списано в дело" };
+            PerspectiveList = new List<string> { "Отказной", "Факт", "Раскрытие" };
             Employee = employee;
             
             if (material == null)
@@ -154,24 +159,24 @@ namespace Course.ViewModel
             }
         }
 
-        public RelayCommand AddVictimCommand
-        {
-            get
-            {
-                return addVictimCommand ??
-                  (addVictimCommand = new RelayCommand((o) =>
-                  {
-                      VictimWindow victimWindow = new VictimWindow(Material, db, null);
-                      victimWindow.ShowDialog();
+        //public RelayCommand AddVictimCommand
+        //{
+        //    get
+        //    {
+        //        return addVictimCommand ??
+        //          (addVictimCommand = new RelayCommand((o) =>
+        //          {
+        //              VictimWindow victimWindow = new VictimWindow(Material, db, null);
+        //              victimWindow.ShowDialog();
 
-                      victimsList.Clear();
-                      db.Materials.Where(x => x.MaterialId == Material.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
+        //              victimsList.Clear();
+        //              db.Materials.Where(x => x.MaterialId == Material.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
 
-                      MessageBox.Show("Потерпевший добавлен");
-                  }
-                  ));
-            }
-        }
+        //              MessageBox.Show("Потерпевший добавлен");
+        //          }
+        //          ));
+        //    }
+        //}
 
         public RelayCommand EditVictimCommand
         {

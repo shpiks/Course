@@ -19,10 +19,16 @@ namespace Course.ViewModel
         public RelayCommand ExitCommand { get; set; }
         public RelayCommand AcceptCommand { get; private set; }
         public Employee Employee { get; private set; }
+        public List<string> PositionList { get; private set; }
+        public List<string> RankList { get; private set; }
 
         public EmployeeViewModel(Employee employee, ApplicationContext db)
         {
             this.db = db;
+            PositionList = new List<string> {"оперуполномоченный","ст. оперуполномоченный", "ст. оперуполномоченный по ОВД" };
+            RankList = new List<string> {"мл.лейтенант","лейтенант", "ст.лейтенант", "капитан", "майор",
+                "подполковник" };
+
             if (employee == null)
             {
                 Employee = new Employee();
@@ -62,6 +68,7 @@ namespace Course.ViewModel
             {
                 db.Employees.Add(employee);
                 db.SaveChanges();
+                MessageBox.Show("Сотрудник добавлен");
                 //_transferData.ID_Author = author.ID_Author;
                 ExitCommand.Execute();
             }
@@ -104,6 +111,7 @@ namespace Course.ViewModel
                 //db.Employees.Remove(db.Employees.Where(x => x.EmployeeId == employee.EmployeeId).First());
                 //db.Employees.Add(employee);
                 db.SaveChanges();
+                MessageBox.Show("Данные сотрудника изменены");
                 ExitCommand.Execute();
             }
             catch (Exception exc)

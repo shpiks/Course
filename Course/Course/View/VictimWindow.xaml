@@ -7,8 +7,9 @@
         xmlns:s="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:Course.View"
         mc:Ignorable="d"
-        Title="VictimWindow" Height="350" Width="350"
-        WindowStartupLocation="CenterOwner">
+        Title="Информация о заявителе" Height="350" Width="350"
+        WindowStartupLocation="CenterOwner"
+         ResizeMode ="NoResize">
     
     <Window.Resources>
         <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />

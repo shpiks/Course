@@ -12,21 +12,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Course.View
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для AllMaterialWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AllMaterialWindow : Window
     {
-        public MainWindow(ApplicationContext db)
+        public AllMaterialWindow(ApplicationContext db)
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel(db);
-            
+            AllMaterialViewModel allMaterialViewModel = new AllMaterialViewModel(db);
+            this.DataContext = allMaterialViewModel;
         }
     }
 }

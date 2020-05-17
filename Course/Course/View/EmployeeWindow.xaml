@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Course.View"
         mc:Ignorable="d"
-        Title="EmployeeWindow" Height="300" Width="300"
-        WindowStartupLocation="CenterOwner">
+        Title="Информация о сотруднике" Height="250" Width="300"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode ="NoResize">
 
     <Window.Resources>
         <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />
@@ -44,9 +45,19 @@
         <TextBox Text="{Binding Employee.LastName}" Grid.Column="1" />
         <TextBox Text="{Binding  Employee.FirstName}" Grid.Column="1" Grid.Row="1" />
         <TextBox Text="{Binding  Employee.Patronymic}" Grid.Column="1" Grid.Row="2" />
-        <TextBox Text="{Binding Employee.Position}" Grid.Column="1" Grid.Row="3" />
-        <TextBox Text="{Binding  Employee.Rank}" Grid.Column="1" Grid.Row="4" />
-        
+        <!--<TextBox Text="{Binding Employee.Position}" Grid.Column="1" Grid.Row="3" />-->
+
+        <ComboBox ItemsSource="{Binding PositionList}"
+
+            SelectedItem="{Binding  Employee.Position}"
+                  Grid.Column="1" Grid.Row="3"/>
+
+        <!--<TextBox Text="{Binding  Employee.Rank}" Grid.Column="1" Grid.Row="4" />-->
+
+        <ComboBox ItemsSource="{Binding RankList}"
+            SelectedItem="{Binding  Employee.Rank}"
+                  Grid.Column="1" Grid.Row="4"/>
+
         <StackPanel HorizontalAlignment="Center"
                     Orientation="Horizontal"
                     Grid.Row="5" Grid.Column="1">

@@ -99,3 +99,5 @@ E:\Git\Course\Course\Course\bin\Debug\zh-Hans\System.Windows.Interactivity.resou
 E:\Git\Course\Course\Course\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
 E:\Git\Course\Course\Course\obj\Debug\View\NotificationWindow.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\NotificationWindow.baml
+E:\Git\Course\Course\Course\obj\Debug\View\AllMaterialWindow.g.cs
+E:\Git\Course\Course\Course\obj\Debug\View\AllMaterialWindow.baml

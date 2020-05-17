@@ -29,7 +29,7 @@ namespace Course.View
         {
             InitializeComponent();
             Materials = new ObservableCollection<Material>();
-            db.Materials.ToList().Where(x => x.DateOfTerm == DateTime.Today.AddDays(1)).ToList().ForEach(x => Materials.Add(x));
+            db.Materials.ToList().Where(x => x.DateOfTerm == DateTime.Today.AddDays(1) && x.ExecutedOrNotExecuted != true).ToList().ForEach(x => Materials.Add(x));
             this.DataContext = this;
             LBNotifications.ItemsSource = Materials;
         }
