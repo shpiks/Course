@@ -1,6 +1,7 @@
 ﻿using Course.Commands;
 using Course.Context;
 using Course.Model;
+using Course.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,10 +15,15 @@ namespace Course.ViewModel
     class AllMaterialViewModel
     {
         RelayCommand filterMaterialsCommand;
-        ApplicationContext db;
-        private Employee selectedEmployee;
-        private string selectedDecision;
+        RelayCommand showMaterialCommand;
+        RelayCommand showVictimCommand;
 
+
+        ApplicationContext db;
+        private Employee selectedEmployee = new Employee() { LastName = " " };
+        private string selectedDecision;
+        private Material selectedMaterial;
+        private Victim selectedVictim;
 
 
         private ObservableCollection<Material> materials;
@@ -67,11 +73,40 @@ namespace Course.ViewModel
 
         public Employee SelectedEmployee
         {
-            get { return selectedEmployee; }
+            //get { return selectedEmployee; }
+
+            get
+            {
+                if (selectedEmployee.LastName == " ")
+                    return null;
+                else
+                    return selectedEmployee;
+            }
             set
             {
                 selectedEmployee = value;
                 
+            }
+        }
+
+        public Material SelectedMaterial
+        {
+            get { return selectedMaterial; }
+            set
+            {
+                selectedMaterial = value;
+
+            }
+        }
+
+        public Victim SelectedVictim
+        {
+            get { return selectedVictim; }
+            set
+            {
+                selectedVictim = value;
+                OnPropertyChanged("SelectedVictim");
+
             }
         }
 
@@ -82,12 +117,11 @@ namespace Course.ViewModel
             Employees = new ObservableCollection<Employee>();
             db.Materials.ToList().Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => Materials.Add(x));
 
-            Employees.Add(null);
+            Employees.Add(new Employee() {LastName = " " });
             db.Employees.ToList().ForEach(x => Employees.Add(x));
 
             DecisionList = new List<string> {" ", "Отказано в ВУД", "ВУД(факт)", "ВУД(лицо)", "Передано по территориальности",
                 "Передано в др. службу", "Списано в дело" };
-
 
 
             StartData = DateTime.Today;
@@ -134,6 +168,36 @@ namespace Course.ViewModel
                       }
 
                   }
+                  ));
+            }
+        }
+
+        public RelayCommand ShowMaterialCommand
+        {
+            get
+            {
+                return showMaterialCommand ??
+                  (showMaterialCommand = new RelayCommand((o) =>
+                  {
+                      LookMaterialWindow lookMaterialWindow = new LookMaterialWindow();
+                      lookMaterialWindow.DataContext = SelectedMaterial;
+                      lookMaterialWindow.ShowDialog();
+                  }, (o => SelectedMaterial != null)
+                  ));
+            }
+        }
+
+        public RelayCommand ShowVictimCommand
+        {
+            get
+            {
+                return showVictimCommand ??
+                  (showVictimCommand = new RelayCommand((o) =>
+                  {
+                      SelectedVictim = db.Victims.FirstOrDefault(x => x.Materials.FirstOrDefault().MaterialId == SelectedMaterial.MaterialId);
+                      LookVictimWindow lookVictimWindow = new LookVictimWindow(null, db, SelectedVictim);
+                      lookVictimWindow.ShowDialog();
+                  }, (o => SelectedMaterial != null)
                   ));
             }
         }

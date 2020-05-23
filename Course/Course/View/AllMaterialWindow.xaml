@@ -17,7 +17,9 @@
             <ColumnDefinition Width="550"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <ListView Name="LBNotifications" ItemsSource ="{Binding Materials}" >
+        <ListView Name="LBNotifications" ItemsSource ="{Binding Materials}" 
+                  SelectedItem="{Binding SelectedMaterial}"
+                  >
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding=
@@ -111,7 +113,9 @@
                 </Label>
                 <ComboBox ItemsSource="{Binding Employees}"
                           SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
-                          DisplayMemberPath ="LastName">
+                          DisplayMemberPath ="LastName"
+                          SelectedIndex="0"
+                           >
                     
                 </ComboBox>
             </StackPanel>
@@ -132,8 +136,30 @@
 
             <Button Content="Отфильтровать" Margin="5"
                    Command="{Binding FilterMaterialsCommand}">
-                
             </Button>
+
+            <Button Content="Просмотреть ифрм. о материале" Margin="5"
+                   Command="{Binding ShowMaterialCommand}"
+                    CommandParameter="{Binding SelectedMaterial}">
+            </Button>
+
+            <Button Content="Просмотреть ифрм. о заявителе" Margin="5"
+                   Command="{Binding ShowVictimCommand }"
+                    CommandParameter="{Binding SelectedMaterial}">
+            </Button>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Колличество материалов:">
+                    
+                </Label>
+                <TextBlock Text="{Binding Materials.Count}"
+                            VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="14"
+                           FontWeight="Bold">
+                
+            </TextBlock>
+
+            </StackPanel>
 
         </StackPanel>
     </Grid>

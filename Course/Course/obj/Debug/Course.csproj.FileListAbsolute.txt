@@ -101,3 +101,7 @@ E:\Git\Course\Course\Course\obj\Debug\View\NotificationWindow.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\NotificationWindow.baml
 E:\Git\Course\Course\Course\obj\Debug\View\AllMaterialWindow.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\AllMaterialWindow.baml
+E:\Git\Course\Course\Course\obj\Debug\View\LookMaterialWindow.g.cs
+E:\Git\Course\Course\Course\obj\Debug\View\LookMaterialWindow.baml
+E:\Git\Course\Course\Course\obj\Debug\View\RewriteMaterialWindow.g.cs
+E:\Git\Course\Course\Course\obj\Debug\View\RewriteMaterialWindow.baml

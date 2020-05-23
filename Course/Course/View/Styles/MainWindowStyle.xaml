@@ -12,7 +12,7 @@
     <local:ConverterExtension x:Key="ConverterExtension" />
     <local:ConverterEK x:Key="ConverterEK"/>
     <local:ConverterDesisionCB x:Key="ConverterDesisionCB"/>
-    <local:CondertorForNullInCB x:Key="CondertorForNullInCB"/>
+    <local:ConverterExecutedOrNotExecuted x:Key="ConverterExecutedOrNotExecuted"/>
 
     <SolidColorBrush x:Key="ForForeground" Color="#fefdca" />
 

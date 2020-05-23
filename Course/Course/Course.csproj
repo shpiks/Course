@@ -97,21 +97,25 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Converters\CondertorForNullInCB.cs" />
     <Compile Include="Converters\ConverterDesisionCB.cs" />
     <Compile Include="Converters\ConverterEK.cs" />
+    <Compile Include="Converters\ConverterExecutedOrNotExecuted.cs" />
     <Compile Include="Converters\ConverterExtension.cs" />
     <Compile Include="ViewModel\AllMaterialViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MaterialViewModel.cs" />
     <Compile Include="ViewModel\NotificationViewModel.cs" />
+    <Compile Include="ViewModel\RewriteMaterialViewModelcs.cs" />
     <Compile Include="ViewModel\VictimViewModel.cs" />
     <Compile Include="View\AllMaterialWindow.xaml.cs">
       <DependentUpon>AllMaterialWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EmployeeWindow.xaml.cs">
       <DependentUpon>EmployeeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LookMaterialWindow.xaml.cs">
+      <DependentUpon>LookMaterialWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LookVictimWindow.xaml.cs">
       <DependentUpon>LookVictimWindow.xaml</DependentUpon>
@@ -122,10 +126,17 @@
     <Compile Include="View\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\RewriteMaterialWindow.xaml.cs">
+      <DependentUpon>RewriteMaterialWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\VictimWindow.xaml.cs">
       <DependentUpon>VictimWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="View\AllMaterialWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LookMaterialWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RewriteMaterialWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -71,9 +71,7 @@
             <Button Content="Изменить" Margin="5" Width="150"
                     Command="{Binding EditEmployeeCommand}"
                     CommandParameter="{Binding SelectedEmployee}"/>
-            <Button Content="Удалить" Margin="5" Width="150"
-                    Command="{Binding DeleteEmployeeCommand}"
-                    CommandParameter="{Binding SelectedEmployee}"/>
+ 
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="1" >
@@ -96,17 +94,21 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </ScrollViewer>
-            <Button Content="Добавить материал" Margin="5" Width="150"
+            <Button Content="Добавить материал" Margin="5" Width="170"
                     Command="{Binding AddMaterialCommand}"/>
-            <Button Content="Изменить материал" Margin="5" Width="150"
+            <Button Content="Изменить материал" Margin="5" Width="170"
                     Command="{Binding EditMaterialCommand}"
                     CommandParameter="{Binding SelectedMaterial}"/>
-            <Button Content="Удалить материал" Margin="5" Width="150"
+            <!--<Button Content="Удалить материал" Margin="5" Width="170"
                     Command="{Binding DeleteMaterialCommand}"
-                    CommandParameter="{Binding SelectedMaterial}"/>
-            <Button Content="Добавить заявителя" Width="150"
+                    CommandParameter="{Binding SelectedMaterial}"/>-->
+            <Button Content="Добавить заявителя" Width="170"
                     Margin="5"
                     Command="{Binding AddVictimCommand}"
+                    CommandParameter="{Binding SelectedMaterial}"/>
+            <Button Content="Переназначить исполнителя" Width="170"
+                    Margin="5"
+                    Command="{Binding RewriteMaterialCommand}"
                     CommandParameter="{Binding SelectedMaterial}"/>
         </StackPanel>
 

@@ -8,15 +8,15 @@ using System.Windows.Data;
 
 namespace Course.Converters
 {
-    class CondertorForNullInCB : IValueConverter
+    class ConverterExecutedOrNotExecuted : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-                return "       ";
+            bool data = (bool)value;
+            if (data == true)
+                return "Принято";
             else
-                return (string)value;
-
+                return "Не принято";
 
         }
 

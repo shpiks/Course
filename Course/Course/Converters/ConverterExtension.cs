@@ -16,8 +16,7 @@ namespace Course.Converters
             if (data == true)
                 return "Продлен";
             else
-                return "Не продлен";
-            
+                return "Не продлен";           
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

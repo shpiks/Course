@@ -80,18 +80,6 @@ namespace Course.ViewModel
 
         private void EditCommand(object obj)
         {
-            //Employee employee = new Employee()
-            //{
-            //    EmployeeId = Employee.EmployeeId,
-            //    FirstName = Employee.FirstName,
-            //    LastName = Employee.LastName,
-            //    Patronymic = Employee.Patronymic,
-            //    Rank = Employee.Rank,
-            //    Position = Employee.Position
-
-            //    //Patronymic = (Author.Patronymic is null) ? "" : Author.Patronymic,
-            //    //Nickname = (Author.Nickname is null) ? "" : Author.Nickname
-            //};
 
             try
             {

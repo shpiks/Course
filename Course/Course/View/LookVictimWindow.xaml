@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Course.View"
         mc:Ignorable="d"
         Title="LookVictimWindow" Height="350" Width="350"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        ResizeMode ="NoResize">
 
     <Window.Resources>
         <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />

@@ -30,6 +30,7 @@ namespace Course.ViewModel
         RelayCommand lookVictimCommand;
         RelayCommand addVictimCommand;
         RelayCommand lookAllMaterialCommand;
+        RelayCommand rewriteMaterialCommand;
 
         public RelayCommand ExitCommand { get; set; }
 
@@ -289,6 +290,31 @@ namespace Course.ViewModel
                   ));
             }
         }
+
+        public RelayCommand RewriteMaterialCommand
+        {
+            get
+            {
+                return rewriteMaterialCommand ??
+                  (rewriteMaterialCommand = new RelayCommand((o) =>
+                  {
+                      RewriteMaterialWindow rewriteMaterialWindow = new RewriteMaterialWindow(db, SelectedMaterial, SelectedEmployee);
+                      
+                      rewriteMaterialWindow.ShowDialog();
+
+                      //victimsList.Clear();
+                      //db.Materials.Where(x => x.MaterialId == SelectedMaterial.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
+
+                      //MessageBox.Show("Потерпевший добавлен");
+                      Materials.Clear();
+                      db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => materials.Add(x));
+
+                  }, (o => SelectedMaterial != null)
+                  ));
+            }
+        }
+
+        
 
 
         public event PropertyChangedEventHandler PropertyChanged;
