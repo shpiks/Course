@@ -13,14 +13,15 @@ using System.Windows;
 
 namespace Course.ViewModel
 {
-    class EmployeeViewModel 
+    class EmployeeViewModel : INotifyPropertyChanged
     {
         ApplicationContext db;
         public RelayCommand ExitCommand { get; set; }
-        public RelayCommand AcceptCommand { get; private set; }
+        public RelayCommand AcceptCommand { get; private set; }        
+        public List<string> PositionList { get; set; }
+        public List<string> RankList { get; set; }
+
         public Employee Employee { get; private set; }
-        public List<string> PositionList { get; private set; }
-        public List<string> RankList { get; private set; }
 
         public EmployeeViewModel(Employee employee, ApplicationContext db)
         {
@@ -31,7 +32,14 @@ namespace Course.ViewModel
 
             if (employee == null)
             {
-                Employee = new Employee();
+                Employee = new Employee()
+                {                    
+                    FirstName = "Иван",
+                    LastName = "Иванов",
+                    Patronymic = "Иванович",
+                    Rank = "",
+                    Position = ""
+                };
                 AcceptCommand = new RelayCommand(AddCommand);
             }
             else
@@ -53,6 +61,7 @@ namespace Course.ViewModel
 
         private void AddCommand(object obj)
         {
+
             Employee employee = new Employee()
             {
                 FirstName = Employee.FirstName,
@@ -111,12 +120,12 @@ namespace Course.ViewModel
 
 
 
-        //public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        //public void OnPropertyChanged([CallerMemberName]string prop = "")
-        //{
-        //    if (PropertyChanged != null)
-        //        PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        //}
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }

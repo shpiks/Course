@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Course.ViewModel
 {
@@ -17,6 +18,7 @@ namespace Course.ViewModel
         RelayCommand filterMaterialsCommand;
         RelayCommand showMaterialCommand;
         RelayCommand showVictimCommand;
+        RelayCommand deleteMaterialCommand;
 
 
         ApplicationContext db;
@@ -85,6 +87,7 @@ namespace Course.ViewModel
             set
             {
                 selectedEmployee = value;
+                
                 
             }
         }
@@ -198,6 +201,28 @@ namespace Course.ViewModel
                       LookVictimWindow lookVictimWindow = new LookVictimWindow(null, db, SelectedVictim);
                       lookVictimWindow.ShowDialog();
                   }, (o => SelectedMaterial != null)
+                  ));
+            }
+        }
+
+        public RelayCommand DeleteMaterialCommand
+        {
+            get
+            {
+                return deleteMaterialCommand ??
+                  (deleteMaterialCommand = new RelayCommand((o) =>
+                  {
+                      var result = MessageBox.Show("Удалить материал?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
+
+                      if (result == MessageBoxResult.Yes)
+                      {
+                          db.Materials.Remove(db.Materials.Where(x => x.MaterialId == SelectedMaterial.MaterialId).First());
+                          db.SaveChanges();
+                          materials.Remove(SelectedMaterial);
+                      }
+
+                      }, (o => SelectedMaterial != null)
+                      
                   ));
             }
         }

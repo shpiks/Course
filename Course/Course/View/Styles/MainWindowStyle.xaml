@@ -13,11 +13,24 @@
     <local:ConverterEK x:Key="ConverterEK"/>
     <local:ConverterDesisionCB x:Key="ConverterDesisionCB"/>
     <local:ConverterExecutedOrNotExecuted x:Key="ConverterExecutedOrNotExecuted"/>
+    <local:InverseAndBooleansToBooleanConverter x:Key="InverseAndBooleansToBooleanConverter"/>
+    
 
     <SolidColorBrush x:Key="ForForeground" Color="#fefdca" />
 
+    <ControlTemplate x:Key="errorTemplate">
+        <Border BorderBrush="OrangeRed" BorderThickness="2">
+            <Grid>
+                <AdornedElementPlaceholder/>
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="OrangeRed"
+                               VerticalAlignment="Center" HorizontalAlignment="Right"
+                               Margin="0,0,4,0"
+                           FontSize="10"/>
+            </Grid>
+        </Border>
+    </ControlTemplate>
 
-    
+
     <Style x:Key="ForLabel">
         <Setter Property="Control.Foreground"
                     Value="{StaticResource ForForeground}" />
@@ -852,7 +865,9 @@
     <!-- ComboBox -->
     <Style TargetType="{x:Type ToggleButton}" x:Key="ComboBoxToggleButton">
         <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}"/>
+        
         <Setter Property="Template">
+
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <ControlTemplate.Resources>

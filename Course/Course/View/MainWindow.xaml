@@ -31,7 +31,7 @@
             Foreground = "FloralWhite"
             >
             <MenuItem Header="Удаление"  >
-                <MenuItem  Command="{Binding DeleteMaterial}"
+                <MenuItem  Command="{Binding DeleteMaterialCommand}"
                     CommandParameter="{Binding SelectedMaterial}" Header="Удалить материал из БД" />
                 <MenuItem  Command="{Binding DeleteEmployeeCommand}"
                     CommandParameter="{Binding SelectedEmployee}" Header="Удалить сотрудника из БД" />
@@ -40,7 +40,7 @@
                 <MenuItem  Command="{Binding LookAllMaterialCommand}"
                      Header="Поиск материалов"/>
             </MenuItem>
-            <MenuItem Header="и еще" />
+            <MenuItem Command="{Binding GetInfoAboutApp}" Header="Справка" />
         </Menu>
 
         <StackPanel Grid.Column="0" Grid.Row="1" >

@@ -147,7 +147,7 @@
                    Command="{Binding ShowVictimCommand }"
                     CommandParameter="{Binding SelectedMaterial}">
             </Button>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" >
                 <Label Content="Колличество материалов:">
                     
                 </Label>
@@ -156,10 +156,13 @@
                            HorizontalAlignment="Center"
                            FontSize="14"
                            FontWeight="Bold">
-                
-            </TextBlock>
 
+                </TextBlock>
             </StackPanel>
+            <Button Content="Удалить материал из БД" Margin="5"
+                   Command="{Binding DeleteMaterialCommand }"
+                    CommandParameter="{Binding SelectedMaterial}">
+            </Button>
 
         </StackPanel>
     </Grid>

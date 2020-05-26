@@ -104,6 +104,7 @@ namespace Course.ViewModel
                 db.Materials.Add(material);
                 db.Employees.SingleOrDefault(x => x.EmployeeId == Employee.EmployeeId).Materials.Add(material);
                 db.SaveChanges();
+                MessageBox.Show("Материал добавлен");
                 ExitCommand.Execute();
 
         }
@@ -151,6 +152,7 @@ namespace Course.ViewModel
                 //oldMaterial = material;
 
                 db.SaveChanges();
+                MessageBox.Show("Материал изменен");
                 ExitCommand.Execute();
             }
             catch (Exception exc)

@@ -101,6 +101,8 @@
     <Compile Include="Converters\ConverterEK.cs" />
     <Compile Include="Converters\ConverterExecutedOrNotExecuted.cs" />
     <Compile Include="Converters\ConverterExtension.cs" />
+    <Compile Include="Converters\InverseAndBooleansToBooleanConverter.cs" />
+    <Compile Include="Validation\MinimumCharacterRule.cs" />
     <Compile Include="ViewModel\AllMaterialViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

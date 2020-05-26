@@ -31,6 +31,7 @@ namespace Course.ViewModel
         RelayCommand addVictimCommand;
         RelayCommand lookAllMaterialCommand;
         RelayCommand rewriteMaterialCommand;
+        RelayCommand getInfoAboutApp;
 
         public RelayCommand ExitCommand { get; set; }
 
@@ -114,7 +115,7 @@ namespace Course.ViewModel
                       materials.Clear();
                       db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => materials.Add(x));
 
-                      MessageBox.Show("Материал добавлен");
+                      
 
                   }, (o => SelectedEmployee != null)
                   ));
@@ -135,7 +136,7 @@ namespace Course.ViewModel
                           MaterialWindow materialWindow = new MaterialWindow(material, selectedEmployee, db);
                           materialWindow.ShowDialog();
 
-                          MessageBox.Show("Материал изменен");
+                          
                       }
                   }, (o => SelectedMaterial != null)
                   ));
@@ -222,12 +223,12 @@ namespace Course.ViewModel
 
                       if (result == MessageBoxResult.Yes)
                       {
-                          var material = o as Material;
-                          if (material != null)
+                          var employee = o as Employee;
+                          if (employee != null)
                           {
-                              db.Materials.Remove(db.Materials.Where(x => x.MaterialId == material.MaterialId).First());
+                              db.Employees.Remove(db.Employees.Where(x => x.EmployeeId == employee.EmployeeId).First());
                               db.SaveChanges();
-                              materials.Remove(material);
+                              Employees.Remove(employee);
                           }
                       }
                   }, (o => SelectedEmployee != null))
@@ -314,7 +315,22 @@ namespace Course.ViewModel
             }
         }
 
-        
+
+        public RelayCommand GetInfoAboutApp
+        {
+            get
+            {
+                return getInfoAboutApp ??
+                  (getInfoAboutApp = new RelayCommand((o) =>
+                  {
+                      MessageBox.Show("Developed by Andrew Shpakovskiy");
+
+                  }
+                  ));
+            }
+        }
+
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;

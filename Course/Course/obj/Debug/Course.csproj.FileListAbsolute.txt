@@ -63,7 +63,6 @@ E:\Git\Course\Course\Course\obj\Debug\Course.exe
 E:\Git\Course\Course\Course\obj\Debug\Course.pdb
 E:\Git\Course\Course\Course\obj\Debug\View\VictimWindow.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\VictimWindow.baml
-E:\Git\Course\Course\Course\obj\Debug\Course.csprojAssemblyReference.cache
 E:\Git\Course\Course\Course\obj\Debug\GeneratedInternalTypeHelper.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\Styles\MainWindowStyle.baml
 E:\Git\Course\Course\Course\obj\Debug\App.baml
@@ -105,3 +104,4 @@ E:\Git\Course\Course\Course\obj\Debug\View\LookMaterialWindow.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\LookMaterialWindow.baml
 E:\Git\Course\Course\Course\obj\Debug\View\RewriteMaterialWindow.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\RewriteMaterialWindow.baml
+E:\Git\Course\Course\Course\obj\Debug\Course.csprojAssemblyReference.cache
