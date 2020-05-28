@@ -6,8 +6,9 @@
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:local="clr-namespace:Course.View"
-      mc:Ignorable="d" 
-      Title="Информация о материале" Height="410" Width="400"
+        xmlns:local1="clr-namespace:Course.Validation"
+        mc:Ignorable="d" 
+      Title="Информация о материале" Height="410" Width="450"
         WindowStartupLocation="CenterOwner"
         ResizeMode ="NoResize">
 
@@ -16,7 +17,6 @@
     </Window.Resources>
 
     <Grid>
-
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="80" />
@@ -71,11 +71,41 @@
         <TextBox Text="{Binding  Material.Story}"
                  Grid.Column="1" Grid.Row="1" 
                  TextWrapping ="Wrap"
-                 Height="70"/>
-        <DatePicker Name="DPDateRegistration"  SelectedDate ="{Binding  Material.DateOfRegistration}"
+                 Height="70"
+                  VerticalScrollBarVisibility="Auto" />
+        <!--<DatePicker Name="DPDateRegistration"  SelectedDate ="{Binding  Material.DateOfRegistration}"
                      Grid.Column="1" Grid.Row="2" 
                      IsTodayHighlighted ="True"
-                     VerticalAlignment="Center">
+                     VerticalAlignment="Center"
+                    >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedDateChanged">
+                    <i:InvokeCommandAction
+                            Command="{Binding ChangeTermCommand}"
+                            CommandParameter="{Binding Material.DateOfRegistration}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DatePicker>-->
+
+        
+        <DatePicker Name="DPDateRegistration" 
+                     Grid.Column="1" Grid.Row="2" 
+                     IsTodayHighlighted ="True"
+                     VerticalAlignment="Center"
+                    Focusable="False"
+                    >
+            <DatePicker.SelectedDate>
+                <Binding Path="Material.DateOfRegistration"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         Mode="TwoWay"
+                         >
+                    <Binding.ValidationRules>
+                        <local1:RegistrationDPRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </DatePicker.SelectedDate>
+
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedDateChanged">
                     <i:InvokeCommandAction
@@ -84,17 +114,38 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </DatePicker>
-        
-        <DatePicker Name="DPTerm" SelectedDate ="{Binding Material.DateOfTerm}"
+
+        <!--<DatePicker Name="DPTerm" SelectedDate ="{Binding Material.DateOfTerm}"
                     Grid.Column="1" Grid.Row="3" 
-                    VerticalAlignment="Center"/>
-        <CheckBox IsChecked="{Binding  Material.Extension}"
+                    VerticalAlignment="Center"/>-->
+
+        <DatePicker Name="DPTerm" 
+                    Grid.Column="1" Grid.Row="3" 
+                    VerticalAlignment="Center"
+                    >
+            <DatePicker.SelectedDate>
+                <Binding Path="Material.DateOfTerm"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <local1:DateOfTermRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </DatePicker.SelectedDate>
+
+        </DatePicker>
+
+        <CheckBox Name="CBExtension"
+            IsChecked="{Binding  Material.Extension}"
                   Grid.Column="1" Grid.Row="4"
                   HorizontalAlignment ="Left"
-                  VerticalAlignment="Center"/>
+                  VerticalAlignment="Center"
+                  Command="{Binding ChangeExtensionCommand}"
+                  CommandParameter="{Binding  Material.Extension}"/>
         
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
-            <ComboBox MaxHeight="20" Width="180"
+            <ComboBox MaxHeight="20" Width="200"
                       ItemsSource="{Binding victimsList}"
                       DisplayMemberPath ="LastName"
                       SelectedItem="{Binding SelectedVictim, Mode=TwoWay}"/>
@@ -137,15 +188,7 @@
                   IsEnabled="{Binding ElementName=CBDecision, Path=SelectedIndex,
             Converter={StaticResource ConverterDesisionCB}}"
                   >
-            <!--<CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=CBDecision, Path=SelectedItem}" Value="{x:Null}">
-                            <Setter Property="IsEnabled" Value="False"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>-->
+
         </CheckBox>
         
 
@@ -158,8 +201,10 @@
                 <Button.IsEnabled>
                     <MultiBinding Converter="{StaticResource InverseAndBooleansToBooleanConverter}" Mode="TwoWay">
                         <Binding ElementName="TBMaterialNumberEK" Path="(Validation.HasError)"  />
+                        <Binding ElementName="DPDateRegistration" Path="(Validation.HasError)"  />
+                        <Binding ElementName="DPTerm" Path="(Validation.HasError)"  />
+                        
                     </MultiBinding>
-
                 </Button.IsEnabled>
                 OK</Button>
             <Button IsCancel="True" MinWidth="60"

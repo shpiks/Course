@@ -14,6 +14,8 @@
     <local:ConverterDesisionCB x:Key="ConverterDesisionCB"/>
     <local:ConverterExecutedOrNotExecuted x:Key="ConverterExecutedOrNotExecuted"/>
     <local:InverseAndBooleansToBooleanConverter x:Key="InverseAndBooleansToBooleanConverter"/>
+    <local:ConvertreForDatePicker x:Key="ConvertreForDatePicker"/>
+    
     
 
     <SolidColorBrush x:Key="ForForeground" Color="#fefdca" />

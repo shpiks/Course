@@ -30,6 +30,7 @@ namespace Course.ViewModel
         //RelayCommand addVictimCommand;
         RelayCommand editVictimCommand;
         RelayCommand changeTermCommand;
+        RelayCommand changeExtensionCommand;
 
         public RelayCommand ExitCommand { get; set; }
         public RelayCommand AcceptCommand { get; private set; }
@@ -57,8 +58,19 @@ namespace Course.ViewModel
             
             if (material == null)
             {
-                Material = new Material();
-                AcceptCommand = new RelayCommand(AddCommand); 
+                
+                    Material = new Material()
+                    {
+                        DateOfRegistration = DateTime.Today,
+
+                        DateOfTerm = DateTime.Today.AddDays(10)
+
+                    };
+                    AcceptCommand = new RelayCommand(AddCommand);
+
+                    //Material.DateOfRegistration =(Material.DateOfRegistration is null) ? DateTime.Today : Material.DateOfRegistration;
+
+                
             }
             else
             {
@@ -88,7 +100,7 @@ namespace Course.ViewModel
             {
                 NumberEK = Material.NumberEK,
                 Story = Material.Story,
-                DateOfRegistration = Material.DateOfRegistration,
+                DateOfRegistration =  Material.DateOfRegistration,
                 DateOfTerm = Material.DateOfTerm,
                 Extension = Material.Extension,
                 Decision = Material.Decision,
@@ -209,14 +221,33 @@ namespace Course.ViewModel
                 return changeTermCommand ??
                   (changeTermCommand = new RelayCommand((o) =>
                   {
-                      DateTime date = (DateTime) o;
-                      Material.DateOfTerm = date.AddDays(10);
+                      if (o != null)
+                      {
+                          DateTime date = (DateTime)o;
+                          Material.DateOfTerm = date.AddDays(10);
+                      }
                   }
                   ));
             }
         }
 
 
+        public RelayCommand ChangeExtensionCommand
+        {
+            get
+            {
+                return changeExtensionCommand ??
+                  (changeExtensionCommand = new RelayCommand((o) =>
+                  {
+                      if ((bool)o == true)
+                      {
+                          MessageBox.Show("Материал продлен, не забудьте изменить срок");
+                      }
+                  }
+                  ));
+            }
+        }
+        
 
 
 

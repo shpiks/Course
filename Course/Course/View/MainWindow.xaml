@@ -124,82 +124,77 @@
             <StackPanel
                 Background="{StaticResource ControlLightBackground}"
                     Opacity="0.9">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Единая книга №:  "
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Единая книга №:  "
                        Style="{StaticResource ForLabel}"
                        />
-                <TextBlock Name="TBNumberEK"
-                           Text="{Binding Path=NumberEK}"
+                    <TextBlock x:Name="TBNumberEK"
+                           Text="{Binding NumberEK}"
                            Style="{StaticResource ForLabel}"
                            VerticalAlignment="Center"
                            Margin="5"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Дата регистрации:"
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Дата регистрации:"
                        Style="{StaticResource ForLabel}"/>
-                <TextBlock Name="TBDateOfRegistration"
-                           Text="{Binding Path=DateOfRegistration,
-                    StringFormat=d,
-                    ConverterCulture=en-GB}"
+                    <TextBlock x:Name="TBDateOfRegistration"
+                           Text="{Binding DateOfRegistration, ConverterCulture=en-GB, StringFormat=d}"
                            Style="{StaticResource ForLabel}"
                            VerticalAlignment="Center"
                            Margin="5"/>
-            </StackPanel>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Срок по материалу:"
                        Style="{StaticResource ForLabel}"/>
-                    <TextBlock Name="TBDateOfTerm"
-                           Text="{Binding Path=DateOfTerm,
-                    StringFormat=d,
-                    ConverterCulture=en-GB}"
+                    <TextBlock x:Name="TBDateOfTerm"
+                           Text="{Binding DateOfTerm, ConverterCulture=en-GB, StringFormat=d}"
                            Style="{StaticResource ForLabel}"
                            VerticalAlignment="Center"
                            Margin="5"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
-                <Label Content="Фабула:"
+                    <Label Content="Фабула:"
                        Style="{StaticResource ForLabel}"/>
-                <TextBlock Name="TBStory"
+                    <TextBlock x:Name="TBStory"
                            Height="200"
-                           Text="{Binding Path=Story}"
+                           Text="{Binding Story}"
                            Style="{StaticResource ForLabel}"
                            VerticalAlignment="Center"
                            Margin="5"
                            TextWrapping ="Wrap"
                            />
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <Label Content="Перспектива:"
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label Content="Перспектива:"
                        Style="{StaticResource ForLabel}"/>
-                <TextBlock Name="TBPerspective"
+                    <TextBlock x:Name="TBPerspective"
                            Height="40"
-                           Text="{Binding Path=Perspective}"
+                           Text="{Binding Perspective}"
                            Style="{StaticResource ForLabel}"
                            VerticalAlignment="Center"
                            Margin="5"
                            TextWrapping ="Wrap"/>
-            </StackPanel>
+                </StackPanel>
 
 
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Продленный:"
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Продленный:"
                        Style="{StaticResource ForLabel}"/>
-                <TextBlock Name="TBExtension"
-                           Text="{Binding Path=Extension,
-                    Converter={StaticResource ConverterExtension}}"
+                    <TextBlock x:Name="TBExtension"
+                           Text="{Binding Extension, Converter={StaticResource ConverterExtension}}"
                            Style="{StaticResource ForLabel}"
                            VerticalAlignment="Center"
                            Margin="5"/>
-            </StackPanel>
+                </StackPanel>
 
-            <StackPanel Orientation="Vertical">
-                <Label Content="Заявители:"
+                <StackPanel Orientation="Vertical">
+                    <Label Content="Заявители:"
                        Style="{StaticResource ForLabel}"/>
-                <ListBox Name="LBVictim"
+                    <ListBox x:Name="LBVictim"
                            Height="100"
                           ItemsSource="{Binding Victims, Mode=TwoWay}"
                          DisplayMemberPath ="LastName"/>
-            </StackPanel>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
         <Button Content="Просмотреть" Margin="41,590,40,47"
