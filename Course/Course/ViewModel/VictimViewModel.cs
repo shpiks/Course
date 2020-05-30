@@ -27,8 +27,14 @@ namespace Course.ViewModel
 
             if (victim == null)
             {
-                Victim = new Victim();
-                Victim.DateOfBirth = new DateTime(1980,01,01);
+                Victim = new Victim()
+                {
+                    DateOfBirth = new DateTime(1980, 01, 01),
+                    FirstName ="Иван",
+                    LastName = "Иванов",
+                    Patronymic = "Иванович"
+                };
+                
                 AcceptCommand = new RelayCommand(AddCommand);
             }
             else if (Material == null)
@@ -50,7 +56,8 @@ namespace Course.ViewModel
                     Street = victim.Street,
                     Home = victim.Home,
                     Flat = victim.Flat,
-                    DateOfBirth = victim.DateOfBirth
+                    DateOfBirth = victim.DateOfBirth,
+                    Corps = victim.Corps
                 };
                 AcceptCommand = new RelayCommand(EditCommand);
             }
@@ -69,7 +76,8 @@ namespace Course.ViewModel
                 Street = Victim.Street,
                 Home = Victim.Home,
                 Flat = Victim.Flat,
-                DateOfBirth = Victim.DateOfBirth
+                DateOfBirth = Victim.DateOfBirth,
+                Corps = Victim.Corps
             };
 
             try
@@ -121,6 +129,7 @@ namespace Course.ViewModel
                     oldVictim.Home = Victim.Home;
                     oldVictim.Flat = Victim.Flat;
                     oldVictim.DateOfBirth = Victim.DateOfBirth;
+                    oldVictim.Corps = Victim.Corps;
                 }
 
 
@@ -147,7 +156,8 @@ namespace Course.ViewModel
                 Street = Victim.Street,
                 Home = Victim.Home,
                 Flat = Victim.Flat,
-                DateOfBirth = Victim.DateOfBirth
+                DateOfBirth = Victim.DateOfBirth,
+                Corps = Victim.Corps
 
                 //Patronymic = (Author.Patronymic is null) ? "" : Author.Patronymic,
                 //Nickname = (Author.Nickname is null) ? "" : Author.Nickname

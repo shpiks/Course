@@ -1,5 +1,6 @@
 ﻿using Course.Context;
 using Course.Model;
+using Course.ViewModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,13 +26,16 @@ namespace Course.View
     {
         public ObservableCollection<Material> Materials { get; set; }
 
-    public NotificationWindow(ApplicationContext db )
+    public NotificationWindow(ApplicationContext db, bool b )
         {
             InitializeComponent();
-            Materials = new ObservableCollection<Material>();
-            db.Materials.ToList().Where(x => x.DateOfTerm == DateTime.Today.AddDays(1) && x.ExecutedOrNotExecuted != true).ToList().ForEach(x => Materials.Add(x));
-            this.DataContext = this;
-            LBNotifications.ItemsSource = Materials;
+            NotificationViewModel notificationViewModel = new NotificationViewModel(db, b);
+            this.DataContext = notificationViewModel;
+
+            //Materials = new ObservableCollection<Material>();
+            //db.Materials.ToList().Where(x => x.DateOfTerm == DateTime.Today.AddDays(1) && x.ExecutedOrNotExecuted != true).ToList().ForEach(x => Materials.Add(x));
+            //this.DataContext = notificationViewModel;
+            //LBNotifications.ItemsSource = Materials;
         }
     }
 }

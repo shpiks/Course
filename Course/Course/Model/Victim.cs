@@ -16,7 +16,8 @@ namespace Course.Model
         private string phoneNumber { get; set; } //Номер телефона
         private string city { get; set; } // Город
         private string street { get; set; } // Улица
-        private int home { get; set; } // Дом
+        private string home { get; set; } // Дом
+        private string corps { get; set; }
         private string flat { get; set; } //Квартира
         private DateTime dateOfBirth { get; set; } // Дата рождения
 
@@ -89,7 +90,7 @@ namespace Course.Model
                 OnPropertyChanged("Street");
             }
         } // Улица
-        public int Home
+        public string Home
         {
             get { return home; }
             set
@@ -98,6 +99,17 @@ namespace Course.Model
                 OnPropertyChanged("Home");
             }
         } // Дом
+
+        public string Corps
+        {
+            get { return corps; }
+            set
+            {
+                corps = value;
+                OnPropertyChanged("Corps");
+            }
+        } // Корпус
+        
         public string Flat
         {
             get { return flat; }

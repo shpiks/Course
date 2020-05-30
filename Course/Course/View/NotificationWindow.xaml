@@ -14,7 +14,7 @@
     </Window.Resources>
 
     <Grid>
-        <ListView Name="LBNotifications"  >
+        <ListView Name="LBNotifications" ItemsSource ="{Binding Materials}"  >
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding=

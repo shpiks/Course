@@ -32,6 +32,7 @@ namespace Course.ViewModel
         RelayCommand lookAllMaterialCommand;
         RelayCommand rewriteMaterialCommand;
         RelayCommand getInfoAboutApp;
+        RelayCommand lookTermOnTodayCommand;
 
         public RelayCommand ExitCommand { get; set; }
 
@@ -324,6 +325,24 @@ namespace Course.ViewModel
                   (getInfoAboutApp = new RelayCommand((o) =>
                   {
                       MessageBox.Show("Developed by Andrew Shpakovskiy");
+
+                  }
+                  ));
+            }
+        }
+
+        public RelayCommand LookTermOnTodayCommand
+        {
+            get
+            {
+                return lookTermOnTodayCommand ??
+                  (lookTermOnTodayCommand = new RelayCommand((o) =>
+                  {
+                      NotificationWindow notificationWindow = new NotificationWindow(db, false);
+
+                      notificationWindow.ShowDialog();
+
+                      
 
                   }
                   ));

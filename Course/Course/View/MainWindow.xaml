@@ -39,7 +39,10 @@
             <MenuItem Header="Функции">
                 <MenuItem  Command="{Binding LookAllMaterialCommand}"
                      Header="Поиск материалов"/>
+                <MenuItem  Command="{Binding LookTermOnTodayCommand}"
+                     Header="Посмотреть сроки на сегодня"/>
             </MenuItem>
+            
             <MenuItem Command="{Binding GetInfoAboutApp}" Header="Справка" />
         </Menu>
 
@@ -59,7 +62,7 @@
                             <TextBlock HorizontalAlignment="Stretch">
                                 <Run Text="{Binding LastName}" />
                                 <Run Text="{Binding FirstName}" />
-                                
+                           
                             </TextBlock>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

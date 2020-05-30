@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Course.View"
         mc:Ignorable="d"
-        Title="LookVictimWindow" Height="350" Width="350"
+        Title="LookVictimWindow" Height="420" Width="350"
         WindowStartupLocation="CenterOwner"
         ResizeMode ="NoResize">
 
@@ -17,6 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition  />
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -52,10 +53,14 @@
         <Label Content="Дом" Grid.Row="6"
                    HorizontalAlignment="Center"
                VerticalAlignment="Center"/>
-        <Label Content="Квартира" Grid.Row="7"
+        <Label Content="Корпус" Grid.Row="7"
                    HorizontalAlignment="Center"
                VerticalAlignment="Center"/>
-        <Label Content="Дата рождения" Grid.Row="8"
+
+        <Label Content="Квартира" Grid.Row="8"
+                   HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Label Content="Дата рождения" Grid.Row="9"
                    HorizontalAlignment="Center"
                VerticalAlignment="Center"/>
 
@@ -80,18 +85,21 @@
         <TextBlock Text="{Binding  Victim.Home}"
                  Grid.Column="1" Grid.Row="6" 
                    VerticalAlignment="Center"/>
-        <TextBlock Text="{Binding  Victim.Flat}"
+        <TextBlock Text="{Binding  Victim.Corps}"
                  Grid.Column="1" Grid.Row="7" 
+                   VerticalAlignment="Center"/>
+        <TextBlock Text="{Binding  Victim.Flat}"
+                 Grid.Column="1" Grid.Row="8" 
                    VerticalAlignment="Center"/>
         <TextBlock Text="{Binding  Victim.DateOfBirth,
                     StringFormat=d,
                     ConverterCulture=en-GB}"
-                 Grid.Column="1" Grid.Row="8"
+                 Grid.Column="1" Grid.Row="9"
                    VerticalAlignment="Center"/>
 
 
 
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="9" Grid.Column="1">
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="10" Grid.Column="1">
             
             <Button IsCancel="True" MinWidth="60" Margin="5">OK</Button>
         </StackPanel>

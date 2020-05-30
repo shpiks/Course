@@ -67,7 +67,7 @@ namespace Course
 
             if (listMaterials.Count != 0)
             {
-                NotificationWindow notificationWindow = new NotificationWindow(db);
+                NotificationWindow notificationWindow = new NotificationWindow(db, true);
                 notificationWindow.ShowDialog();
             }
             dispatcherTimer.Interval = new TimeSpan(2, 0, 0);

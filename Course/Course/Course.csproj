@@ -103,7 +103,9 @@
     <Compile Include="Converters\ConverterExtension.cs" />
     <Compile Include="Converters\ConvertreForDatePicker.cs" />
     <Compile Include="Converters\InverseAndBooleansToBooleanConverter.cs" />
+    <Compile Include="Validation\CityAndStreetRule.cs" />
     <Compile Include="Validation\DateOfTermRule.cs" />
+    <Compile Include="Validation\HomeRule.cs" />
     <Compile Include="Validation\MinimumCharacterRule.cs" />
     <Compile Include="Validation\RegistrationDPRule.cs" />
     <Compile Include="ViewModel\AllMaterialViewModel.cs" />
