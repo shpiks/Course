@@ -2,6 +2,7 @@
 using Course.Context;
 using Course.Model;
 using Course.View;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,8 @@ namespace Course.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        Logger logger = LogManager.GetCurrentClassLogger();
+
         ApplicationContext db;
         private Material selectedMaterial;
         private Employee selectedEmployee;
@@ -82,10 +85,18 @@ namespace Course.ViewModel
                 materials.Clear();
                 if (selectedEmployee != null)
                 {
+                    try
+                    {
                     db.Materials.Where(x => x.DateOfTerm < DateTime.Today).ToList().ForEach(x => x.ExecutedOrNotExecuted = true);
                     db.SaveChanges();
                     db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => materials.Add(x));
-                    //FilterBooks = "";
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex, "Ошибка загрузки БД свойстве SelectedEmployee");
+                    }
+
                 }
             }
 
@@ -97,8 +108,15 @@ namespace Course.ViewModel
             this.db = db;
 
             this.Materials = new ObservableCollection<Material>();
-            this.db.Employees.Load();
-            this.Employees = new ObservableCollection<Employee>(this.db.Employees.Local.ToBindingList());
+            try
+            {
+                this.db.Employees.Load();
+                this.Employees = new ObservableCollection<Employee>(this.db.Employees.Local.ToBindingList());
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Ошибка загрузки БД в конструкторе ");
+            }
 
 
         }
@@ -114,9 +132,15 @@ namespace Course.ViewModel
                       materialWindow.ShowDialog();
 
                       materials.Clear();
-                      db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => materials.Add(x));
+                      try
+                      {
+                          db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => materials.Add(x));
+                      }
+                      catch (Exception ex)
+                      {
+                          logger.Error(ex, "Ошибка загрузки БД после добавления материала");
+                      }
 
-                      
 
                   }, (o => SelectedEmployee != null)
                   ));
@@ -137,7 +161,17 @@ namespace Course.ViewModel
                           MaterialWindow materialWindow = new MaterialWindow(material, selectedEmployee, db);
                           materialWindow.ShowDialog();
 
-                          
+                          materials.Clear();
+                          try
+                          {
+                              db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => materials.Add(x));
+                          }
+                          catch (Exception ex)
+                          {
+                              logger.Error(ex, "Ошибка загрузки БД после изменения материала");
+                          }
+
+
                       }
                   }, (o => SelectedMaterial != null)
                   ));
@@ -158,8 +192,17 @@ namespace Course.ViewModel
                           var material = o as Material;
                           if (material != null)
                           {
-                              db.Materials.Remove(db.Materials.Where(x => x.MaterialId == material.MaterialId).First());
-                              db.SaveChanges();
+                              try
+                              {
+                                  db.Materials.Remove(db.Materials.Where(x => x.MaterialId == material.MaterialId).First());
+                                  db.SaveChanges();
+                                  logger.Info("Материал ЕК№" + material.NumberEK + " удален из БД");
+                              }
+                              catch (Exception ex)
+                              {
+                                  logger.Error(ex, "Ошибка загрузки БД после удаления материала");
+                              }
+
                               materials.Remove(material);
                           }
                       }
@@ -177,9 +220,16 @@ namespace Course.ViewModel
                   {
                       EmployeeWindow employeeWindow = new EmployeeWindow(null, db);
                       employeeWindow.ShowDialog();
-                      var newEmployee = db.Employees.ToList().Except(employees.ToList()).FirstOrDefault();
-                      if (newEmployee != null)
-                          employees.Add(newEmployee);
+                      try
+                      {
+                          var newEmployee = db.Employees.ToList().Except(employees.ToList()).FirstOrDefault();
+                          if (newEmployee != null)
+                              employees.Add(newEmployee);
+                      }
+                      catch (Exception ex)
+                      {
+                          logger.Error(ex, "Ошибка загрузки БД после добавления сотрудника");
+                      }
                       //MessageBox.Show("Сотрудник добавлен");
                   }));
             }
@@ -198,13 +248,6 @@ namespace Course.ViewModel
                           var employee = o as Employee;
                           EmployeeWindow employeeWindow = new EmployeeWindow(employee, db);
                           employeeWindow.ShowDialog();
-
-
-                          //employees.Remove(employee);
-                          //var newEmployee = db.Employees.ToList().Except(employees.ToList()).FirstOrDefault();
-                          //if (newEmployee != null)
-                          //    employees.Add(newEmployee);
-                          //MessageBox.Show("Данные сотрудника изменены");
 
 
                       }
@@ -227,8 +270,17 @@ namespace Course.ViewModel
                           var employee = o as Employee;
                           if (employee != null)
                           {
-                              db.Employees.Remove(db.Employees.Where(x => x.EmployeeId == employee.EmployeeId).First());
-                              db.SaveChanges();
+                              try
+                              {
+                                  db.Employees.Remove(db.Employees.Where(x => x.EmployeeId == employee.EmployeeId).First());
+                                  db.SaveChanges();
+                                  logger.Info("Сотрудник " + employee.FirstName + employee.LastName + " удален из БД");
+                              }
+                              catch (Exception ex)
+                              {
+                                  logger.Error(ex, "Ошибка загрузки БД после удаления сотрудника");
+                              }
+
                               Employees.Remove(employee);
                           }
                       }
@@ -263,10 +315,6 @@ namespace Course.ViewModel
                       VictimWindow victimWindow = new VictimWindow(SelectedMaterial, db, null);
                       victimWindow.ShowDialog();
 
-                      //victimsList.Clear();
-                      //db.Materials.Where(x => x.MaterialId == SelectedMaterial.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
-
-                      //MessageBox.Show("Потерпевший добавлен");
 
                   }, (o => SelectedMaterial != null)
                   ));
@@ -282,12 +330,6 @@ namespace Course.ViewModel
                   {
                       AllMaterialWindow allMaterialWindow = new AllMaterialWindow(db);
                       allMaterialWindow.ShowDialog();
-
-                      //victimsList.Clear();
-                      //db.Materials.Where(x => x.MaterialId == SelectedMaterial.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
-
-                      //MessageBox.Show("Потерпевший добавлен");
-
                   }
                   ));
             }
@@ -300,16 +342,18 @@ namespace Course.ViewModel
                 return rewriteMaterialCommand ??
                   (rewriteMaterialCommand = new RelayCommand((o) =>
                   {
-                      RewriteMaterialWindow rewriteMaterialWindow = new RewriteMaterialWindow(db, SelectedMaterial, SelectedEmployee);
-                      
+                      RewriteMaterialWindow rewriteMaterialWindow = new RewriteMaterialWindow(db, SelectedMaterial, SelectedEmployee);                     
                       rewriteMaterialWindow.ShowDialog();
-
-                      //victimsList.Clear();
-                      //db.Materials.Where(x => x.MaterialId == SelectedMaterial.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
-
-                      //MessageBox.Show("Потерпевший добавлен");
                       Materials.Clear();
-                      db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => materials.Add(x));
+
+                      try
+                      {
+                          db.Employees.FirstOrDefault(x => x.EmployeeId == selectedEmployee.EmployeeId).Materials.Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => materials.Add(x));
+                      }
+                      catch (Exception ex)
+                      {
+                          logger.Error(ex, "Ошибка загрузки БД после того как материал был переписан на другого сотрудника");
+                      }
 
                   }, (o => SelectedMaterial != null)
                   ));
@@ -339,7 +383,6 @@ namespace Course.ViewModel
                   (lookTermOnTodayCommand = new RelayCommand((o) =>
                   {
                       NotificationWindow notificationWindow = new NotificationWindow(db, false);
-
                       notificationWindow.ShowDialog();
 
                       

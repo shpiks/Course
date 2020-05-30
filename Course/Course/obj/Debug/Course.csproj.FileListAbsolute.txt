@@ -105,3 +105,5 @@ E:\Git\Course\Course\Course\obj\Debug\View\LookMaterialWindow.baml
 E:\Git\Course\Course\Course\obj\Debug\View\RewriteMaterialWindow.g.cs
 E:\Git\Course\Course\Course\obj\Debug\View\RewriteMaterialWindow.baml
 E:\Git\Course\Course\Course\obj\Debug\Course.csprojAssemblyReference.cache
+E:\Git\Course\Course\Course\bin\Debug\NLog.dll
+E:\Git\Course\Course\Course\bin\Debug\NLog.xml

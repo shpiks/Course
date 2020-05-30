@@ -1,5 +1,6 @@
 ﻿using Course.Context;
 using Course.View;
+using NLog;
 using System;
 using System.Collections;
 using System.Linq;
@@ -37,6 +38,8 @@ namespace Course
         {
             App app = new App();
             app.Application_Startup();
+            Logger logger = LogManager.GetCurrentClassLogger();
+            logger.Info("Запуск приложения");
 
             var splash = new SplashScreen("Resources/preview.jpeg");
             splash.Show(true);
@@ -61,9 +64,17 @@ namespace Course
         private static void dispatcherTimer_Tick(object sender, EventArgs e, ApplicationContext db, DispatcherTimer dispatcherTimer)
         {
             ArrayList listMaterials = new ArrayList();
-            
+            Logger logger = LogManager.GetCurrentClassLogger();
 
-            db.Materials.ToList().Where(x => x.DateOfTerm == DateTime.Today.AddDays(1)).ToList().ForEach(x => listMaterials.Add(x));
+            try
+            {
+                db.Materials.ToList().Where(x => x.DateOfTerm == DateTime.Today.AddDays(1) && x.ExecutedOrNotExecuted != true).ToList().ForEach(x => listMaterials.Add(x));
+                
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Ошибка загрузки БД в таймере");
+            }
 
             if (listMaterials.Count != 0)
             {

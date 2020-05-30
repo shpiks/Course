@@ -1,6 +1,7 @@
 ﻿using Course.Commands;
 using Course.Context;
 using Course.Model;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ namespace Course.ViewModel
 {
     class RewriteMaterialViewModelcs : INotifyPropertyChanged
     {
+        Logger logger = LogManager.GetCurrentClassLogger();
         ApplicationContext db;
         private Employee selectedEmployee;
         private Material material;
@@ -52,8 +54,16 @@ namespace Course.ViewModel
             this.db = db;
             this.material = material;
             oldEmployee = employee;
-            this.Employees = new ObservableCollection<Employee>(/*this.db.Employees.Local.ToBindingList()*/);
-            db.Employees.ToList().ForEach(x => Employees.Add(x));
+            this.Employees = new ObservableCollection<Employee>();
+            try
+            {
+                db.Employees.ToList().ForEach(x => Employees.Add(x));
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+                logger.Error(exc, "Ошибка с загрузкой данных из БД в конструкторе");
+            }
             Employees.Remove(oldEmployee);
         }
 
@@ -71,11 +81,13 @@ namespace Course.ViewModel
                           db.Employees.FirstOrDefault(x => x.EmployeeId == oldEmployee.EmployeeId).Materials.Remove(material);
                           db.SaveChanges();
                           MessageBox.Show("Материал ЕК№" + material.NumberEK + " переписан на " + SelectedEmployee.LastName);
+                          logger.Info("Материал ЕК№" + material.NumberEK + " переписан на " + SelectedEmployee.LastName);
                           ExitCommand.Execute();
                       }
                       catch (Exception exc)
                       {
                           MessageBox.Show(exc.Message);
+                          logger.Error(exc, "Ошибка в комманде RewriteMaterialCommand");
                       }
                   }, (o => SelectedEmployee != null)
                   ));

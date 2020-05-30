@@ -1,6 +1,7 @@
 ﻿using Course.Commands;
 using Course.Context;
 using Course.Model;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Course.ViewModel
     class VictimViewModel
     {
         ApplicationContext db;
+        Logger logger = LogManager.GetCurrentClassLogger();
 
         public Victim Victim { get; private set; }
         Material Material;
@@ -86,34 +88,20 @@ namespace Course.ViewModel
             db.Materials.SingleOrDefault(x => x.MaterialId == Material.MaterialId).Victims.Add(victim);
             db.SaveChanges();
             MessageBox.Show("Потерпевший добавлен, после обновления выбора материала или сотрудника он будет отображаться в соответсвующем поле");
+            logger.Info("Потерпевший " + Victim.FirstName + Victim.LastName + " добавлен в БД");
             ExitCommand.Execute();
             }
 
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+                logger.Error(exc, "Ошибка в комманде AddCommand");
             }
 
         }
 
         private void EditCommand(object obj)
         {
-            //Victim victim = new Victim()
-            //{
-            //    FirstName = Victim.FirstName,
-            //    LastName = Victim.LastName,
-            //    Patronymic = Victim.Patronymic,
-            //    PhoneNumber = Victim.PhoneNumber,
-            //    City = Victim.City,
-            //    Street = Victim.Street,
-            //    Home = Victim.Home,
-            //    Flat = Victim.Flat,
-            //    DateOfBirth = Victim.DateOfBirth
-
-            //    //Patronymic = (Author.Patronymic is null) ? "" : Author.Patronymic,
-            //    //Nickname = (Author.Nickname is null) ? "" : Author.Nickname
-            //};
-
             try
             {
 
@@ -132,15 +120,14 @@ namespace Course.ViewModel
                     oldVictim.Corps = Victim.Corps;
                 }
 
-
-                //oldVictim = victim;
-
                 db.SaveChanges();
+                logger.Info("Данные потерпевшего изменены на " + Victim.FirstName +" " + Victim.LastName);
                 ExitCommand.Execute();
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+                logger.Error(exc, "Ошибка в комманде EditCommand");
             }
         }
 

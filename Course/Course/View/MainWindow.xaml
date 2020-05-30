@@ -163,8 +163,10 @@
                            Text="{Binding Story}"
                            Style="{StaticResource ForLabel}"
                            VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
                            Margin="5"
                            TextWrapping ="Wrap"
+                           
                            />
                 </StackPanel>
                 <StackPanel Orientation="Vertical">

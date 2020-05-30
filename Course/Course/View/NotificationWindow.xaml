@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Напоминание" Height="350" Width="370"
         WindowStartupLocation="CenterOwner"
-        ResizeMode ="NoResize">
+        ResizeMode ="NoResize" Icon="/Course;component/Resources/icon.png">
 
     <Window.Resources>
         <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />

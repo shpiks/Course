@@ -2,6 +2,7 @@
 using Course.Context;
 using Course.Model;
 using Course.View;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ namespace Course.ViewModel
 {
     class AllMaterialViewModel
     {
+        Logger logger = LogManager.GetCurrentClassLogger();
         RelayCommand filterMaterialsCommand;
         RelayCommand showMaterialCommand;
         RelayCommand showVictimCommand;
@@ -118,10 +120,17 @@ namespace Course.ViewModel
             this.db = db;
             Materials = new ObservableCollection<Material>();
             Employees = new ObservableCollection<Employee>();
-            db.Materials.ToList().Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => Materials.Add(x));
+            try
+            {
+                db.Materials.ToList().Where(x => x.ExecutedOrNotExecuted != true).ToList().ForEach(x => Materials.Add(x));
 
-            Employees.Add(new Employee() {LastName = " " });
-            db.Employees.ToList().ForEach(x => Employees.Add(x));
+                Employees.Add(new Employee() { LastName = " " });
+                db.Employees.ToList().ForEach(x => Employees.Add(x));
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Ошибка загрузки БД в конструкторе ");
+            }
 
             DecisionList = new List<string> {" ", "Отказано в ВУД", "ВУД(факт)", "ВУД(лицо)", "Передано по территориальности",
                 "Передано в др. службу", "Списано в дело" };
@@ -140,34 +149,40 @@ namespace Course.ViewModel
                   {
 
                       Materials.Clear();
-
-                      if (SelectedEmployee != null && SelectedDecision != null)
+                      try
                       {
-                          //Materials.Where(x => x.Employees.FirstOrDefault().EmployeeId == SelectedEmployee.EmployeeId);
-                          db.Materials.Where(x => x.DateOfRegistration >= StartData
-                            && x.DateOfRegistration <= FinishData
-                            && x.Employees.FirstOrDefault().EmployeeId == SelectedEmployee.EmployeeId
-                            && x.Decision == SelectedDecision)
-                            .ToList().ForEach(x => Materials.Add(x));
+                          if (SelectedEmployee != null && SelectedDecision != null)
+                          {
+                              //Materials.Where(x => x.Employees.FirstOrDefault().EmployeeId == SelectedEmployee.EmployeeId);
+                              db.Materials.Where(x => x.DateOfRegistration >= StartData
+                                && x.DateOfRegistration <= FinishData
+                                && x.Employees.FirstOrDefault().EmployeeId == SelectedEmployee.EmployeeId
+                                && x.Decision == SelectedDecision)
+                                .ToList().ForEach(x => Materials.Add(x));
+                          }
+                          else if (SelectedEmployee == null && SelectedDecision != null)
+                          {
+                              db.Materials.Where(x => x.DateOfRegistration >= StartData
+                               && x.DateOfRegistration <= FinishData
+                               && x.Decision == SelectedDecision)
+                               .ToList().ForEach(x => Materials.Add(x));
+                          }
+                          else if (SelectedEmployee != null && SelectedDecision == null)
+                          {
+                              db.Materials.Where(x => x.DateOfRegistration >= StartData
+                                && x.DateOfRegistration <= FinishData
+                                && x.Employees.FirstOrDefault().EmployeeId == SelectedEmployee.EmployeeId)
+                                .ToList().ForEach(x => Materials.Add(x));
+                          }
+                          else
+                          {
+                              db.Materials.Where(x => x.DateOfRegistration >= StartData
+                                && x.DateOfRegistration <= FinishData).ToList().ForEach(x => Materials.Add(x));
+                          }
                       }
-                      else if (SelectedEmployee == null && SelectedDecision != null)
+                      catch (Exception ex)
                       {
-                          db.Materials.Where(x => x.DateOfRegistration >= StartData
-                           && x.DateOfRegistration <= FinishData
-                           && x.Decision == SelectedDecision)
-                           .ToList().ForEach(x => Materials.Add(x));
-                      }
-                      else if (SelectedEmployee != null && SelectedDecision == null)
-                      {
-                          db.Materials.Where(x => x.DateOfRegistration >= StartData
-                            && x.DateOfRegistration <= FinishData
-                            && x.Employees.FirstOrDefault().EmployeeId == SelectedEmployee.EmployeeId)
-                            .ToList().ForEach(x => Materials.Add(x));
-                      }
-                      else
-                      {
-                          db.Materials.Where(x => x.DateOfRegistration >= StartData
-                            && x.DateOfRegistration <= FinishData).ToList().ForEach(x => Materials.Add(x));
+                          logger.Error(ex, "Ошибка при фильрации данных из БД");
                       }
 
                   }
@@ -197,7 +212,15 @@ namespace Course.ViewModel
                 return showVictimCommand ??
                   (showVictimCommand = new RelayCommand((o) =>
                   {
-                      SelectedVictim = db.Victims.FirstOrDefault(x => x.Materials.FirstOrDefault().MaterialId == SelectedMaterial.MaterialId);
+                      try
+                      {
+                          SelectedVictim = db.Victims.FirstOrDefault(x => x.Materials.FirstOrDefault().MaterialId == SelectedMaterial.MaterialId);
+                      }
+                      catch (Exception ex)
+                      {
+                          logger.Error(ex, "Ошибка c БД в ShowVictimCommand");
+                      }
+
                       LookVictimWindow lookVictimWindow = new LookVictimWindow(null, db, SelectedVictim);
                       lookVictimWindow.ShowDialog();
                   }, (o => SelectedMaterial != null)
@@ -216,8 +239,16 @@ namespace Course.ViewModel
 
                       if (result == MessageBoxResult.Yes)
                       {
-                          db.Materials.Remove(db.Materials.Where(x => x.MaterialId == SelectedMaterial.MaterialId).First());
-                          db.SaveChanges();
+                          try
+                          {
+                              db.Materials.Remove(db.Materials.Where(x => x.MaterialId == SelectedMaterial.MaterialId).First());
+                              db.SaveChanges();
+                              logger.Info("Материал ЕК№" + SelectedMaterial.NumberEK + " удален из БД");
+                          }
+                          catch (Exception ex)
+                          {
+                              logger.Error(ex, "Ошибка c удалением материала в БД ");
+                          }
                           materials.Remove(SelectedMaterial);
                       }
 

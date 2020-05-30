@@ -1,6 +1,7 @@
 ﻿using Course.Commands;
 using Course.Context;
 using Course.Model;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ namespace Course.ViewModel
 {
     class EmployeeViewModel : INotifyPropertyChanged
     {
+        Logger logger = LogManager.GetCurrentClassLogger();
         ApplicationContext db;
         public RelayCommand ExitCommand { get; set; }
         public RelayCommand AcceptCommand { get; private set; }        
@@ -77,6 +79,7 @@ namespace Course.ViewModel
             {
                 db.Employees.Add(employee);
                 db.SaveChanges();
+                logger.Info("Сотрудник " + employee.FirstName + " " + employee.LastName + " добавлен в БД");
                 MessageBox.Show("Сотрудник добавлен");
                 //_transferData.ID_Author = author.ID_Author;
                 ExitCommand.Execute();
@@ -84,6 +87,7 @@ namespace Course.ViewModel
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+                logger.Error(exc, "Ошибка c добавлением сотрудника в БД ");
             }
         }
 
@@ -108,12 +112,14 @@ namespace Course.ViewModel
                 //db.Employees.Remove(db.Employees.Where(x => x.EmployeeId == employee.EmployeeId).First());
                 //db.Employees.Add(employee);
                 db.SaveChanges();
+                logger.Info("Данные сотрудника изменены на " + Employee.FirstName + " " + Employee.LastName);
                 MessageBox.Show("Данные сотрудника изменены");
                 ExitCommand.Execute();
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+                logger.Error(exc, "Ошибка c изменением данных сотрудника");
             }
 
         }

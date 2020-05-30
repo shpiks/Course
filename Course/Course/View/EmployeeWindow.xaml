@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Информация о сотруднике" Height="250" Width="400"
         WindowStartupLocation="CenterOwner"
-        ResizeMode ="NoResize">
+        ResizeMode ="NoResize" Icon="/Course;component/Resources/icon.png">
 
     <Window.Resources>
         <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />

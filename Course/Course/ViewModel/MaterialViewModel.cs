@@ -2,6 +2,7 @@
 using Course.Context;
 using Course.Model;
 using Course.View;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,7 @@ namespace Course.ViewModel
 {
     public class MaterialViewModel : INotifyPropertyChanged
     {
+        Logger logger = LogManager.GetCurrentClassLogger();
         ApplicationContext db;
         private Victim selectedVictim;
         private Employee Employee;
@@ -68,9 +70,6 @@ namespace Course.ViewModel
                     };
                     AcceptCommand = new RelayCommand(AddCommand);
 
-                    //Material.DateOfRegistration =(Material.DateOfRegistration is null) ? DateTime.Today : Material.DateOfRegistration;
-
-                
             }
             else
             {
@@ -88,8 +87,15 @@ namespace Course.ViewModel
                     ExecutedOrNotExecuted = material.ExecutedOrNotExecuted,
                     Perspective = material.Perspective
                 };
-
-                db.Materials.Where(x => x.MaterialId == Material.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
+                try
+                {
+                    db.Materials.Where(x => x.MaterialId == Material.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show(exc.Message);
+                    logger.Error(exc, "Ошибка с загрузкой данных из БД в конструкторе класса");
+                }
                 AcceptCommand = new RelayCommand(EditCommand);
             }
         }
@@ -116,6 +122,7 @@ namespace Course.ViewModel
                 db.Materials.Add(material);
                 db.Employees.SingleOrDefault(x => x.EmployeeId == Employee.EmployeeId).Materials.Add(material);
                 db.SaveChanges();
+                logger.Info("Материал ЕК№" + material.NumberEK + " добавлен в БД");
                 MessageBox.Show("Материал добавлен");
                 ExitCommand.Execute();
 
@@ -123,6 +130,7 @@ namespace Course.ViewModel
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+                logger.Error(exc, "Ошибка c добавлением материала в БД ");
             }
 }
 
@@ -164,33 +172,18 @@ namespace Course.ViewModel
                 //oldMaterial = material;
 
                 db.SaveChanges();
+                logger.Info("Материал ЕК№" + oldMaterial.NumberEK + " изменен");
                 MessageBox.Show("Материал изменен");
                 ExitCommand.Execute();
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
+                logger.Error(exc, "Ошибка c изменением данных материала в БД ");
             }
         }
 
-        //public RelayCommand AddVictimCommand
-        //{
-        //    get
-        //    {
-        //        return addVictimCommand ??
-        //          (addVictimCommand = new RelayCommand((o) =>
-        //          {
-        //              VictimWindow victimWindow = new VictimWindow(Material, db, null);
-        //              victimWindow.ShowDialog();
 
-        //              victimsList.Clear();
-        //              db.Materials.Where(x => x.MaterialId == Material.MaterialId).SingleOrDefault().Victims.ToList().ForEach(x => victimsList.Add(x));
-
-        //              MessageBox.Show("Потерпевший добавлен");
-        //          }
-        //          ));
-        //    }
-        //}
 
         public RelayCommand EditVictimCommand
         {
@@ -248,10 +241,6 @@ namespace Course.ViewModel
             }
         }
         
-
-
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

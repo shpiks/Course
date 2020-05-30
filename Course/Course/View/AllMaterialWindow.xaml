@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Course.View"
         mc:Ignorable="d"
         Title="Окно поиска материалов" Height="450" Width="785"
-        ResizeMode ="NoResize">
+        ResizeMode ="NoResize" Icon="/Course;component/Resources/icon.png">
 
     <Window.Resources>
         <ResourceDictionary Source="Styles/MainWindowStyle.xaml" />
