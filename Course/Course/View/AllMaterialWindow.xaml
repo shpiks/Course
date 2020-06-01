@@ -148,7 +148,7 @@
                     CommandParameter="{Binding SelectedMaterial}">
             </Button>
             <StackPanel Orientation="Horizontal" >
-                <Label Content="Колличество материалов:">
+                <Label Content="Количество материалов:">
                     
                 </Label>
                 <TextBlock Text="{Binding Materials.Count}"
